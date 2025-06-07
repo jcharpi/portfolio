@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Typewriter from "@/components/Typewriter"
 import { FaGithub, FaLinkedin } from "react-icons/fa"
 
@@ -25,6 +26,16 @@ export default function Home() {
           />
         </span>
       </main>
+
+      {/* ─────────────── GRADUATE IMAGE ─────────────── */}
+      <Image
+        src="/graduate.svg"
+        alt="Graduate"
+        width={288}
+        height={288}
+        priority
+        className="absolute bottom-0 right-1/12 sm:right-1/6 w-sm sm:w-md md:w-2xl h-auto z-0"
+      />
 
       {/* ───────────────────────── FOOTER ───────────────────────── */}
       <footer className="absolute bottom-0 inset-x-0 h-12 flex items-center justify-start px-6 z-10 space-x-4">
