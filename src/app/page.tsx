@@ -1,26 +1,27 @@
 "use client"
 
+import Typewriter from "@/components/Typewriter"
 import { FaGithub, FaLinkedin } from "react-icons/fa"
-import { Typewriter } from "react-simple-typewriter"
 
 export default function Home() {
   return (
     <div className="relative h-screen overflow-hidden bg-[#EFF1F3] font-sans">
       {/* ───────────────────────── HEADER ───────────────────────── */}
-      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 text-lg font-medium text-gray-800">
+      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-gray-800">
         <p>Resume</p>
       </header>
 
       {/* ───────────────────────── MAIN CONTENT ───────────────────────── */}
-      <main className="flex flex-col h-full max-w-2/3 px-6 text-9xl font-light text-gray-800">
-        <span className="mt-16 ml-8">
+      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-light text-gray-800">
+        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
           <Typewriter
-            words={["Hello, I'm Josh, a software developer who loves creating for a purpose."]}
-            loop={1}
-            cursorStyle='|'
-            typeSpeed={30}
-            deleteSpeed={Infinity}
-            delaySpeed={Number.POSITIVE_INFINITY}
+            lines={[
+              "Hello, I'm Josh,",
+              "a software developer who loves",
+              "creating for a purpose.",
+            ]}
+            speed={35}
+            bold={["Josh", "software", "developer", "purpose"]}
           />
         </span>
       </main>
