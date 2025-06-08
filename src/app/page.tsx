@@ -1,19 +1,29 @@
 "use client"
 
-import Image from "next/image"
 import Typewriter from "@/components/Typewriter"
+import Cursor from "@/components/Cursor"
+
 import { FaGithub, FaLinkedin } from "react-icons/fa"
+import Image from "next/image"
 
 export default function Home() {
   return (
     <div className="relative h-screen overflow-hidden bg-[#EFF1F3] font-sans">
       {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-gray-800">
-        <p>Resume</p>
+        <p>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Resume
+          </a>
+        </p>
       </header>
 
       {/* ───────────────────────── MAIN CONTENT ───────────────────────── */}
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-3xl font-light text-gray-800">
+      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-gray-800">
         <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
           <Typewriter
             lines={[
@@ -24,7 +34,9 @@ export default function Home() {
             speed={35}
             bold={["Josh", "software", "developer", "purpose"]}
           />
+          <Cursor/>
         </span>
+
       </main>
 
       {/* ─────────────── GRADUATE IMAGE ─────────────── */}
@@ -34,7 +46,7 @@ export default function Home() {
         width={288}
         height={288}
         priority
-        className="absolute bottom-0 right-1/12 sm:right-1/6 w-sm sm:w-md md:w-2xl h-auto z-0"
+        className="absolute bottom-0 right-1/12 h-3/8 w-auto z-0"
       />
 
       {/* ───────────────────────── FOOTER ───────────────────────── */}
