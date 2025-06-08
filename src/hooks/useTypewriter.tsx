@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react"
 
-/**
- * Incrementally builds the text contained in `lines`, typing one
- * character at a time without ever erasing already‑printed text.
- *
- * @param lines  Array of lines to type (each line rendered separately)
- * @param speed  Milliseconds between keystrokes – defaults to 50 ms
- */
 export const useTypewriter = (lines: string[], speed = 50) => {
   const [displayText, setDisplayText] = useState("")
 
