@@ -46,7 +46,7 @@ export default function Home() {
         width={288}
         height={288}
         priority
-        className="absolute bottom-0 right-1/12 h-3/8 w-auto z-0"
+        className="absolute bottom-0 right-1/12 h-3/8 sm:h-4/8 md:h-5/8 w-auto z-0"
       />
 
       {/* ───────────────────────── FOOTER ───────────────────────── */}
