@@ -12,11 +12,7 @@ export default function Home() {
       {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-gray-800">
         <p>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
             Resume
           </a>
         </p>
@@ -34,9 +30,8 @@ export default function Home() {
             speed={35}
             bold={["Josh", "software", "developer", "purpose"]}
           />
-          <Cursor/>
+          <Cursor />
         </span>
-
       </main>
 
       {/* ─────────────── GRADUATE IMAGE ─────────────── */}

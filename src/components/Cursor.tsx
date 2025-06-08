@@ -9,7 +9,7 @@ export default function Cursor() {
   // Start at 1 → left = blue, right = red (white is “waiting in line”)
   const [step, setStep] = useState(1)
   const { x, y } = useMousePosition()
-  
+
   // Rotate colors on any left‑click in the window.
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
