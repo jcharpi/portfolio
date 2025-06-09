@@ -5,14 +5,25 @@ import Cursor from "@/components/Cursor"
 
 import { FaGithub, FaLinkedin } from "react-icons/fa"
 import Image from "next/image"
+import { useRef, useMemo } from "react"
 
 export default function Home() {
+  const resumeRef = useRef<HTMLAnchorElement>(null)
+  const githubRef = useRef<HTMLAnchorElement>(null)
+  const linkedinRef = useRef<HTMLAnchorElement>(null)
+  const targets = useMemo(() => [githubRef, linkedinRef, resumeRef], [])
+
   return (
     <div className="relative h-screen overflow-hidden bg-[#EFF1F3] font-sans">
       {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-gray-800">
         <p>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+          <a
+            ref={resumeRef}
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Resume
           </a>
         </p>
@@ -30,7 +41,7 @@ export default function Home() {
             speed={35}
             bold={["Josh", "software", "developer", "purpose"]}
           />
-          <Cursor />
+          <Cursor targets={targets} />
         </span>
       </main>
 
@@ -47,7 +58,8 @@ export default function Home() {
       {/* ───────────────────────── FOOTER ───────────────────────── */}
       <footer className="absolute bottom-0 inset-x-0 h-12 flex items-center justify-start px-6 z-10 space-x-4">
         <a
-          href="https://github.com/yourusername"
+          ref={githubRef}
+          href="https://github.com/jcharpi"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub Profile"
@@ -55,7 +67,8 @@ export default function Home() {
           <FaGithub className="w-6 h-6 text-gray-800 hover:text-gray-600 transition" />
         </a>
         <a
-          href="https://linkedin.com/in/yourprofile"
+          ref={linkedinRef}
+          href="https://www.linkedin.com/in/josh-charpentier-79b1b9253/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn Profile"
