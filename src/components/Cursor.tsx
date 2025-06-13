@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 
 // Constants and types
@@ -12,9 +12,15 @@ type CursorProps = { targets: React.RefObject<HTMLElement | null>[] }
 // Custom hook for cursor behavior
 function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   const { x: mouseX, y: mouseY } = useMousePosition()
-  const [displayPosition, setDisplayPosition] = useState<Position>({ x: mouseX, y: mouseY })
+  const [displayPosition, setDisplayPosition] = useState<Position>({
+    x: mouseX,
+    y: mouseY,
+  })
   const [isSnapped, setIsSnapped] = useState(false)
-  const [snappedElementSize, setSnappedElementSize] = useState<Size>({ width: 0, height: 0 })
+  const [snappedElementSize, setSnappedElementSize] = useState<Size>({
+    width: 0,
+    height: 0,
+  })
   const [colorStep, setColorStep] = useState(1)
 
   const mousePosRef = useRef<Position>({ x: mouseX, y: mouseY })
@@ -43,7 +49,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   // Calculate colors
   const [leftColor, rightColor] = [
     ACCENT_COLORS[colorStep % ACCENT_COLORS.length],
-    ACCENT_COLORS[(colorStep + 1) % ACCENT_COLORS.length]
+    ACCENT_COLORS[(colorStep + 1) % ACCENT_COLORS.length],
   ]
 
   return {
@@ -51,7 +57,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     isSnapped,
     snappedElementSize,
     leftColor,
-    rightColor
+    rightColor,
   }
 }
 
@@ -63,13 +69,12 @@ function useMouseInteractions(
 ) {
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return // Only handle left clicks
+      if (e.button !== 0) return
 
       if (isSnappedRef.current && snappedElementRef.current) {
         snappedElementRef.current.click()
-      }
-      else if (!isSnappedRef.current) {
-        setColorStep(prev => (prev + 1) % ACCENT_COLORS.length)
+      } else if (!isSnappedRef.current) {
+        setColorStep((prev) => (prev + 1) % ACCENT_COLORS.length)
       }
     }
 
@@ -115,17 +120,21 @@ function useCursorPositionUpdate(
       }
 
       // Update states only if values changed
-      setDisplayPosition(prev =>
-        (prev.x === newPosition.x && prev.y === newPosition.y) ? prev : newPosition
+      setDisplayPosition((prev) =>
+        prev.x === newPosition.x && prev.y === newPosition.y
+          ? prev
+          : newPosition
       )
 
-      setIsSnapped(prev =>
+      setIsSnapped((prev) =>
         prev === isCurrentlySnapped ? prev : isCurrentlySnapped
       )
 
       if (isCurrentlySnapped) {
-        setSnappedElementSize(prev =>
-          (prev.width === newSize.width && prev.height === newSize.height) ? prev : newSize
+        setSnappedElementSize((prev) =>
+          prev.width === newSize.width && prev.height === newSize.height
+            ? prev
+            : newSize
         )
       }
     }
@@ -136,7 +145,14 @@ function useCursorPositionUpdate(
     })
 
     return () => cancelAnimationFrame(rafId)
-  }, [targets, mousePosRef, setDisplayPosition, setIsSnapped, setSnappedElementSize, snappedElementRef])
+  }, [
+    targets,
+    mousePosRef,
+    setDisplayPosition,
+    setIsSnapped,
+    setSnappedElementSize,
+    snappedElementRef,
+  ])
 }
 
 // Main cursor component
@@ -146,7 +162,7 @@ export default function Cursor({ targets }: CursorProps) {
     isSnapped,
     snappedElementSize,
     leftColor,
-    rightColor
+    rightColor,
   } = useCursorBehavior(targets)
 
   return (
@@ -155,7 +171,7 @@ export default function Cursor({ targets }: CursorProps) {
       animate={displayPosition}
       transition={{ ease: "easeOut", duration: 0.2 }}
     >
-      <div className="relative pointer-events-none opacity-50">
+      <div className="relative pointer-events-none">
         {isSnapped ? (
           <SnappedElementVisual size={snappedElementSize} />
         ) : (
@@ -170,22 +186,25 @@ export default function Cursor({ targets }: CursorProps) {
 function SnappedElementVisual({ size }: { size: Size }) {
   return (
     <div
-      className="rounded-md bg-black"
+      className="rounded-md bg-black opacity-50"
       style={{
         width: size.width + 16,
-        height: size.height + 16
+        height: size.height + 16,
       }}
     />
   )
 }
 
-function NormalCursorVisual({ leftColor, rightColor }: {
-  leftColor: string;
+function NormalCursorVisual({
+  leftColor,
+  rightColor,
+}: {
+  leftColor: string
   rightColor: string
 }) {
   return (
     <div className="relative w-10 h-10">
-      <div className="absolute inset-0 rounded-full bg-black" />
+      <div className="absolute inset-0 rounded-full bg-black opacity-50" />
       <div
         className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
         style={{ backgroundColor: leftColor }}

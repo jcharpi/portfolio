@@ -2,6 +2,7 @@
 
 import Typewriter from "@/components/Typewriter"
 import Cursor from "@/components/Cursor"
+import ColorBackground from "@/components/ColorBackground"
 
 import { FaGithub, FaLinkedin } from "react-icons/fa"
 import Image from "next/image"
@@ -14,7 +15,9 @@ export default function Home() {
   const targets = useMemo(() => [githubRef, linkedinRef, resumeRef], [])
 
   return (
-    <div className="relative h-screen overflow-hidden bg-[#EFF1F3] font-sans">
+    <div className="relative h-screen overflow-hidden font-sans">
+      <ColorBackground/>
+
       {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-gray-800">
         <p>
