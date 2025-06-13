@@ -3,7 +3,7 @@ import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 
 // Constants and types
-const ACCENT_COLORS = ["#EFF1F3", "#586183", "#C01C1C"]
+const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"]
 
 type Position = { x: number; y: number }
 type Size = { width: number; height: number }
@@ -68,7 +68,7 @@ function useMouseInteractions(
   setColorStep: React.Dispatch<React.SetStateAction<number>>
 ) {
   useEffect(() => {
-    const handleMouseDown = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent) => {
       if (e.button !== 0) return
 
       if (isSnappedRef.current && snappedElementRef.current) {
@@ -78,8 +78,8 @@ function useMouseInteractions(
       }
     }
 
-    window.addEventListener("mousedown", handleMouseDown)
-    return () => window.removeEventListener("mousedown", handleMouseDown)
+    window.addEventListener("click", handleClick)
+    return () => window.removeEventListener("click", handleClick)
   }, [isSnappedRef, snappedElementRef, setColorStep])
 }
 

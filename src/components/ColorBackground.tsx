@@ -1,10 +1,9 @@
-// src/components/ColorBackground.tsx
 "use client"
 
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useState, useEffect } from "react"
 
-const ACCENT_COLORS = ["#EFF1F3", "#586183", "#C01C1C"]
+const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"]
 
 export default function ColorBackground() {
   const [bgColorIndex, setBgColorIndex] = useState(0)
@@ -25,7 +24,7 @@ export default function ColorBackground() {
       initial={{ backgroundColor: ACCENT_COLORS[1] }}
       animate={{ backgroundColor: ACCENT_COLORS[bgColorIndex] }}
       transition={{
-        duration: 0.05,
+        duration: 0.15,
         ease: "easeIn",
       }}
     />
