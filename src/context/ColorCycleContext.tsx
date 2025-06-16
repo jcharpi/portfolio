@@ -1,11 +1,12 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useState } from "react"
 
 export const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"] as const
 
 interface ColorCycleContextValue {
   colorIndex: number
+  setColorIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 const ColorCycleContext = createContext<ColorCycleContextValue | undefined>(undefined)
@@ -13,17 +14,8 @@ const ColorCycleContext = createContext<ColorCycleContextValue | undefined>(unde
 export function ColorCycleProvider({ children }: { children: React.ReactNode }) {
   const [colorIndex, setColorIndex] = useState(0)
 
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (e.button !== 0) return
-      setColorIndex((prev) => (prev + 1) % ACCENT_COLORS.length)
-    }
-    document.addEventListener("click", handleClick)
-    return () => document.removeEventListener("click", handleClick)
-  }, [])
-
   return (
-    <ColorCycleContext.Provider value={{ colorIndex }}>
+    <ColorCycleContext.Provider value={{ colorIndex, setColorIndex }}>
       {children}
     </ColorCycleContext.Provider>
   )

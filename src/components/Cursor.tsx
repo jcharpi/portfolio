@@ -21,7 +21,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     width: 0,
     height: 0,
   })
-  const { colorIndex } = useColorCycle()
+  const { colorIndex, setColorIndex } = useColorCycle()
 
   const mousePosRef = useRef<Position>({ x: mouseX, y: mouseY })
   const isSnappedRef = useRef(isSnapped)
@@ -34,7 +34,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   }, [mouseX, mouseY, isSnapped])
 
   // Handle mouse interactions
-  useMouseInteractions(isSnappedRef, snappedElementRef)
+  useMouseInteractions(isSnappedRef, snappedElementRef, setColorIndex)
 
   // Update cursor position and snapping
   useCursorPositionUpdate(
@@ -50,7 +50,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   const mapping: [string, string][] = [
     [ACCENT_COLORS[1], ACCENT_COLORS[2]],
     [ACCENT_COLORS[2], ACCENT_COLORS[0]],
-    [ACCENT_COLORS[0], ACCENT_COLORS[2]],
+    [ACCENT_COLORS[0], ACCENT_COLORS[1]],
   ]
   const [leftColor, rightColor] = mapping[colorIndex]
 
@@ -66,7 +66,8 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
 // Custom hook for mouse interactions
 function useMouseInteractions(
   isSnappedRef: React.MutableRefObject<boolean>,
-  snappedElementRef: React.MutableRefObject<HTMLElement | null>
+  snappedElementRef: React.MutableRefObject<HTMLElement | null>,
+  setColorIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -74,12 +75,14 @@ function useMouseInteractions(
 
       if (isSnappedRef.current && snappedElementRef.current) {
         snappedElementRef.current.click()
+      } else if (!isSnappedRef.current) {
+        setColorIndex((prev) => (prev + 1) % ACCENT_COLORS.length)
       }
     }
 
     window.addEventListener("click", handleClick)
     return () => window.removeEventListener("click", handleClick)
-  }, [isSnappedRef, snappedElementRef])
+  }, [isSnappedRef, snappedElementRef, setColorIndex])
 }
 
 // Custom hook for cursor position updates
