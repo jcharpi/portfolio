@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
+import { useCursorContext } from "@/context/CursorContext"
 
 // Constants and types
 const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"]
 
 type Position = { x: number; y: number }
 type Size = { width: number; height: number }
-type CursorProps = { targets: React.RefObject<HTMLElement | null>[] }
 
 // Custom hook for cursor behavior
 function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
@@ -156,7 +156,8 @@ function useCursorPositionUpdate(
 }
 
 // Main cursor component
-export default function Cursor({ targets }: CursorProps) {
+export default function Cursor() {
+  const { targets } = useCursorContext()
   const {
     displayPosition,
     isSnapped,
