@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 import { useCursorContext } from "@/context/CursorContext"
+import { ACCENT_COLORS, useColorCycle } from "@/context/ColorCycleContext"
 
 // Constants and types
-const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"]
 
 type Position = { x: number; y: number }
 type Size = { width: number; height: number }
@@ -21,7 +21,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     width: 0,
     height: 0,
   })
-  const [colorStep, setColorStep] = useState(1)
+  const { colorIndex } = useColorCycle()
 
   const mousePosRef = useRef<Position>({ x: mouseX, y: mouseY })
   const isSnappedRef = useRef(isSnapped)
@@ -34,7 +34,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   }, [mouseX, mouseY, isSnapped])
 
   // Handle mouse interactions
-  useMouseInteractions(isSnappedRef, snappedElementRef, setColorStep)
+  useMouseInteractions(isSnappedRef, snappedElementRef)
 
   // Update cursor position and snapping
   useCursorPositionUpdate(
@@ -46,11 +46,13 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     snappedElementRef
   )
 
-  // Calculate colors
-  const [leftColor, rightColor] = [
-    ACCENT_COLORS[colorStep % ACCENT_COLORS.length],
-    ACCENT_COLORS[(colorStep + 1) % ACCENT_COLORS.length],
+  // Calculate colors based on the background color index
+  const mapping: [string, string][] = [
+    [ACCENT_COLORS[1], ACCENT_COLORS[2]],
+    [ACCENT_COLORS[2], ACCENT_COLORS[0]],
+    [ACCENT_COLORS[0], ACCENT_COLORS[2]],
   ]
+  const [leftColor, rightColor] = mapping[colorIndex]
 
   return {
     displayPosition,
@@ -64,8 +66,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
 // Custom hook for mouse interactions
 function useMouseInteractions(
   isSnappedRef: React.MutableRefObject<boolean>,
-  snappedElementRef: React.MutableRefObject<HTMLElement | null>,
-  setColorStep: React.Dispatch<React.SetStateAction<number>>
+  snappedElementRef: React.MutableRefObject<HTMLElement | null>
 ) {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -73,14 +74,12 @@ function useMouseInteractions(
 
       if (isSnappedRef.current && snappedElementRef.current) {
         snappedElementRef.current.click()
-      } else if (!isSnappedRef.current) {
-        setColorStep((prev) => (prev + 1) % ACCENT_COLORS.length)
       }
     }
 
     window.addEventListener("click", handleClick)
     return () => window.removeEventListener("click", handleClick)
-  }, [isSnappedRef, snappedElementRef, setColorStep])
+  }, [isSnappedRef, snappedElementRef])
 }
 
 // Custom hook for cursor position updates
