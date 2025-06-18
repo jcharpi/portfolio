@@ -224,28 +224,40 @@ function NormalCursorVisual({
   clickCount: number
 }) {
   const controls = useAnimationControls()
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
+    setIsAnimating(true)
     controls.set({ x: 0, rotate: 0 })
-    controls.start({
-      x: -64,
-      rotate: 360,
-      transition: { duration: 0.4, ease: "easeInOut" },
-    })
+    controls
+      .start({
+        x: -64,
+        rotate: 360,
+        transition: { duration: 0.4, ease: "easeInOut" },
+      })
+      .then(() => setIsAnimating(false))
   }, [clickCount, controls])
 
   return (
     <div className="relative w-10 h-10">
       <div className="absolute inset-0 rounded-full bg-black opacity-50" />
+      {!isAnimating && (
+        <div
+          className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
+          style={{ backgroundColor: leftColor }}
+        />
+      )}
       <div
-        className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
-        style={{ backgroundColor: leftColor }}
-      />
-      <motion.div
         className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
         style={{ backgroundColor: rightColor }}
-        animate={controls}
       />
+      {isAnimating && (
+        <motion.div
+          className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
+          style={{ backgroundColor: rightColor }}
+          animate={controls}
+        />
+      )}
     </div>
   )
 }
