@@ -202,18 +202,21 @@ function NormalCursorVisual({ colorIndex }: { colorIndex: number }) {
 
     const rotateAnim = animate(
       containerRef.current!,
-      { rotate: -120 },
-      { duration: 0.3, easing: "ease-in-out" }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { rotate: -120 } as any,
+      { duration: 0.3, ease: "easeInOut" }
     )
     const fadeOut = animate(
       leftRef.current!,
-      { opacity: 0 },
-      { duration: 0.3, easing: "ease-in-out" }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { opacity: 0 } as any,
+      { duration: 0.3, ease: "easeInOut" }
     )
     const fadeIn = animate(
       topRef.current!,
-      { opacity: 1 },
-      { duration: 0.3, easing: "ease-in-out" }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { opacity: 1 } as any,
+      { duration: 0.3, ease: "easeInOut" }
     )
 
     Promise.all([rotateAnim.finished, fadeOut.finished, fadeIn.finished]).then(() => {
