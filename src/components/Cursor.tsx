@@ -226,9 +226,11 @@ function NormalCursorVisual({
   const controls = useAnimationControls()
 
   useEffect(() => {
+    controls.set({ x: 0, rotate: 0 })
     controls.start({
-      x: [-64, 0],
-      transition: { duration: 0.3, ease: "easeInOut" },
+      x: -64,
+      rotate: 360,
+      transition: { duration: 0.4, ease: "easeInOut" },
     })
   }, [clickCount, controls])
 
