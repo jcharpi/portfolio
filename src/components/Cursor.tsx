@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { motion } from "motion/react"
+import { motion, useAnimationControls } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 import { useCursorContext } from "@/context/CursorContext"
 import { ACCENT_COLORS, useColorCycle } from "@/context/ColorCycleContext"
@@ -10,7 +10,10 @@ type Position = { x: number; y: number }
 type Size = { width: number; height: number }
 
 // Custom hook for cursor behavior
-function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
+function useCursorBehavior(
+  targets: React.RefObject<HTMLElement | null>[],
+  onLeftClick: () => void
+) {
   const { x: mouseX, y: mouseY } = useMousePosition()
   const [displayPosition, setDisplayPosition] = useState<Position>({
     x: mouseX,
@@ -34,7 +37,12 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   }, [mouseX, mouseY, isSnapped])
 
   // Handle mouse interactions
-  useMouseInteractions(isSnappedRef, snappedElementRef, setColorIndex)
+  useMouseInteractions(
+    isSnappedRef,
+    snappedElementRef,
+    setColorIndex,
+    onLeftClick
+  )
 
   // Update cursor position and snapping
   useCursorPositionUpdate(
@@ -67,11 +75,13 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
 function useMouseInteractions(
   isSnappedRef: React.MutableRefObject<boolean>,
   snappedElementRef: React.MutableRefObject<HTMLElement | null>,
-  setColorIndex: React.Dispatch<React.SetStateAction<number>>
+  setColorIndex: React.Dispatch<React.SetStateAction<number>>,
+  onLeftClick: () => void
 ) {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (e.button !== 0) return
+      onLeftClick()
 
       if (isSnappedRef.current && snappedElementRef.current) {
         snappedElementRef.current.click()
@@ -82,7 +92,7 @@ function useMouseInteractions(
 
     window.addEventListener("click", handleClick)
     return () => window.removeEventListener("click", handleClick)
-  }, [isSnappedRef, snappedElementRef, setColorIndex])
+  }, [isSnappedRef, snappedElementRef, setColorIndex, onLeftClick])
 }
 
 // Custom hook for cursor position updates
@@ -160,13 +170,15 @@ function useCursorPositionUpdate(
 // Main cursor component
 export default function Cursor() {
   const { targets } = useCursorContext()
+  const [clickCount, setClickCount] = useState(0)
+  const handleLeftClick = () => setClickCount((c) => c + 1)
   const {
     displayPosition,
     isSnapped,
     snappedElementSize,
     leftColor,
     rightColor,
-  } = useCursorBehavior(targets)
+  } = useCursorBehavior(targets, handleLeftClick)
 
   return (
     <motion.div
@@ -178,7 +190,11 @@ export default function Cursor() {
         {isSnapped ? (
           <SnappedElementVisual size={snappedElementSize} />
         ) : (
-          <NormalCursorVisual leftColor={leftColor} rightColor={rightColor} />
+          <NormalCursorVisual
+            leftColor={leftColor}
+            rightColor={rightColor}
+            clickCount={clickCount}
+          />
         )}
       </div>
     </motion.div>
@@ -201,10 +217,21 @@ function SnappedElementVisual({ size }: { size: Size }) {
 function NormalCursorVisual({
   leftColor,
   rightColor,
+  clickCount,
 }: {
   leftColor: string
   rightColor: string
+  clickCount: number
 }) {
+  const controls = useAnimationControls()
+
+  useEffect(() => {
+    controls.start({
+      x: [-64, 0],
+      transition: { duration: 0.3, ease: "easeInOut" },
+    })
+  }, [clickCount, controls])
+
   return (
     <div className="relative w-10 h-10">
       <div className="absolute inset-0 rounded-full bg-black opacity-50" />
@@ -212,9 +239,10 @@ function NormalCursorVisual({
         className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
         style={{ backgroundColor: leftColor }}
       />
-      <div
+      <motion.div
         className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
         style={{ backgroundColor: rightColor }}
+        animate={controls}
       />
     </div>
   )
