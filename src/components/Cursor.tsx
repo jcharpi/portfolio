@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { motion } from "motion/react"
+import { motion, useAnimate } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 import { useCursorContext } from "@/context/CursorContext"
 import { ACCENT_COLORS, useColorCycle } from "@/context/ColorCycleContext"
@@ -46,20 +46,11 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     snappedElementRef
   )
 
-  // Calculate colors based on the background color index
-  const mapping: [string, string][] = [
-    [ACCENT_COLORS[1], ACCENT_COLORS[2]],
-    [ACCENT_COLORS[2], ACCENT_COLORS[0]],
-    [ACCENT_COLORS[0], ACCENT_COLORS[1]],
-  ]
-  const [leftColor, rightColor] = mapping[colorIndex]
-
   return {
     displayPosition,
     isSnapped,
     snappedElementSize,
-    leftColor,
-    rightColor,
+    colorIndex,
   }
 }
 
@@ -164,8 +155,7 @@ export default function Cursor() {
     displayPosition,
     isSnapped,
     snappedElementSize,
-    leftColor,
-    rightColor,
+    colorIndex,
   } = useCursorBehavior(targets)
 
   return (
@@ -178,7 +168,7 @@ export default function Cursor() {
         {isSnapped ? (
           <SnappedElementVisual size={snappedElementSize} />
         ) : (
-          <NormalCursorVisual leftColor={leftColor} rightColor={rightColor} />
+          <NormalCursorVisual colorIndex={colorIndex} />
         )}
       </div>
     </motion.div>
@@ -198,24 +188,71 @@ function SnappedElementVisual({ size }: { size: Size }) {
   )
 }
 
-function NormalCursorVisual({
-  leftColor,
-  rightColor,
-}: {
-  leftColor: string
-  rightColor: string
-}) {
+function NormalCursorVisual({ colorIndex }: { colorIndex: number }) {
+  const [visualIndex, setVisualIndex] = useState(colorIndex)
+  const prevIndexRef = useRef(colorIndex)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const leftRef = useRef<HTMLDivElement>(null)
+  const rightRef = useRef<HTMLDivElement>(null)
+  const topRef = useRef<HTMLDivElement>(null)
+  const [, animate] = useAnimate()
+
+  useEffect(() => {
+    if (colorIndex === prevIndexRef.current) return
+
+    const rotateAnim = animate(
+      containerRef.current!,
+      { rotate: -120 },
+      { duration: 0.3, easing: "ease-in-out" }
+    )
+    const fadeOut = animate(
+      leftRef.current!,
+      { opacity: 0 },
+      { duration: 0.3, easing: "ease-in-out" }
+    )
+    const fadeIn = animate(
+      topRef.current!,
+      { opacity: 1 },
+      { duration: 0.3, easing: "ease-in-out" }
+    )
+
+    Promise.all([rotateAnim.finished, fadeOut.finished, fadeIn.finished]).then(() => {
+      if (containerRef.current) containerRef.current.style.rotate = "0deg"
+      if (leftRef.current) leftRef.current.style.opacity = "1"
+      if (topRef.current) topRef.current.style.opacity = "0"
+      setVisualIndex(colorIndex)
+      prevIndexRef.current = colorIndex
+    })
+  }, [colorIndex, animate])
+
+  const mapping: [string, string][] = [
+    [ACCENT_COLORS[1], ACCENT_COLORS[2]],
+    [ACCENT_COLORS[2], ACCENT_COLORS[0]],
+    [ACCENT_COLORS[0], ACCENT_COLORS[1]],
+  ]
+  const [displayLeft, displayRight] = mapping[visualIndex]
+  const topColor = ACCENT_COLORS[visualIndex]
+
   return (
     <div className="relative w-10 h-10">
       <div className="absolute inset-0 rounded-full bg-black opacity-50" />
-      <div
-        className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
-        style={{ backgroundColor: leftColor }}
-      />
-      <div
-        className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
-        style={{ backgroundColor: rightColor }}
-      />
+      <div ref={containerRef} className="absolute inset-0 origin-center">
+        <div
+          ref={topRef}
+          className="absolute -top-5 left-1/2 w-4 h-4 rounded-full opacity-0 -translate-x-1/2"
+          style={{ backgroundColor: topColor }}
+        />
+        <div
+          ref={leftRef}
+          className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
+          style={{ backgroundColor: displayLeft }}
+        />
+        <div
+          ref={rightRef}
+          className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
+          style={{ backgroundColor: displayRight }}
+        />
+      </div>
     </div>
   )
 }
