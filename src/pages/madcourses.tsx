@@ -1,7 +1,7 @@
 "use client"
 
 import Typewriter from "@/components/Typewriter"
-import { useCursorContext } from "@/context/CursorContext"
+import { useCursorContext } from "@/contexts/CursorContext"
 import { useEffect } from "react"
 
 export default function MadCourses() {

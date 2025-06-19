@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
-import { useCursorContext } from "@/context/CursorContext"
-import { ACCENT_COLORS, useColorCycle } from "@/context/ColorCycleContext"
+import { useCursorContext } from "@/contexts/CursorContext"
+import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
 
 // Constants and types
 

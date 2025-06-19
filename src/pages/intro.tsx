@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa"
 import Image from "next/image"
 import { useRef, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
-import { useCursorContext } from "@/context/CursorContext"
+import { useCursorContext } from "@/contexts/CursorContext"
 
 export default function Intro() {
   const resumeRef = useRef<HTMLAnchorElement>(null)

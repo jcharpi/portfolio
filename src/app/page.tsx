@@ -5,8 +5,8 @@ import Cursor from "@/components/Cursor"
 import Intro from "@/pages/intro"
 import BreakIt from "@/pages/breakit"
 import MadCourses from "@/pages/madcourses"
-import { CursorProvider } from "@/context/CursorContext"
-import { ColorCycleProvider, useColorCycle } from "@/context/ColorCycleContext"
+import { CursorProvider } from "@/contexts/CursorContext"
+import { ColorCycleProvider, useColorCycle } from "@/contexts/ColorCycleContext"
 
 export default function Home() {
   return (

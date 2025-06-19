@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react"
-import { ACCENT_COLORS, useColorCycle } from "@/context/ColorCycleContext"
+import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
 
 export default function ColorBackground() {
   const { colorIndex } = useColorCycle()
