@@ -51,14 +51,16 @@ export default function BreakIt() {
 
   return (
     <>
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-white">
-        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+      {/* Heading overlay */}
+      <header className="absolute top-0 left-0 w-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-white">
+        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8 block">
           <Typewriter lines={["BreakIt"]} speed={35} bold={["BreakIt"]} />
         </span>
-      </main>
+      </header>
 
-      <div className="flex">
-        <div className="sticky top-0 h-screen flex items-center justify-center w-1/2">
+      {/* Sticky image with scrollable text */}
+      <div className="flex h-full">
+        <div className="sticky top-0 flex items-center justify-center w-1/2 h-full">
           <motion.img
             key={current.image}
             src={current.image}
@@ -69,7 +71,7 @@ export default function BreakIt() {
             transition={{ duration: 0.4 }}
           />
         </div>
-        <div className="w-1/2 h-screen overflow-y-scroll no-scrollbar">
+        <div className="w-1/2 h-full overflow-y-scroll no-scrollbar">
           {SECTIONS.map((section, i) => (
             <ScrollSection key={i} data={section} index={i} setActive={setActive} />
           ))}
