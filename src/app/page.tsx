@@ -12,13 +12,26 @@ export default function Home() {
   return (
     <ColorCycleProvider>
       <CursorProvider>
-        <div className="relative h-screen overflow-hidden font-sans">
-          <ColorBackground />
-          <PageSelector />
-          <Cursor />
-        </div>
+        <MainContainer />
       </CursorProvider>
     </ColorCycleProvider>
+  )
+}
+
+function MainContainer() {
+  const { colorIndex } = useColorCycle()
+  const scrollable = colorIndex === 1
+
+  return (
+    <div
+      className={`relative h-screen font-sans ${
+        scrollable ? "overflow-y-auto" : "overflow-hidden"
+      }`}
+    >
+      <ColorBackground />
+      <PageSelector />
+      <Cursor />
+    </div>
   )
 }
 
