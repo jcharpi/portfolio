@@ -50,23 +50,31 @@ export default function BreakIt() {
   const current = SECTIONS[active]
 
   return (
-    <div className="flex">
-      <div className="sticky top-0 h-screen flex items-center justify-center w-1/2">
-        <motion.img
-          key={current.image}
-          src={current.image}
-          alt={`BreakIt screen ${active}`}
-          className="w-64 h-auto"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        />
+    <>
+      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-white">
+        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+          <Typewriter lines={["BreakIt"]} speed={35} bold={["BreakIt"]} />
+        </span>
+      </main>
+
+      <div className="flex">
+        <div className="sticky top-0 h-screen flex items-center justify-center w-1/2">
+          <motion.img
+            key={current.image}
+            src={current.image}
+            alt={`BreakIt screen ${active}`}
+            className="w-64 h-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
+        <div className="w-1/2 h-screen overflow-y-scroll no-scrollbar">
+          {SECTIONS.map((section, i) => (
+            <ScrollSection key={i} data={section} index={i} setActive={setActive} />
+          ))}
+        </div>
       </div>
-      <div className="w-1/2">
-        {SECTIONS.map((section, i) => (
-          <ScrollSection key={i} data={section} index={i} setActive={setActive} />
-        ))}
-      </div>
-    </div>
+    </>
   )
 }
