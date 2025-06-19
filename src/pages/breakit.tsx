@@ -2,12 +2,7 @@
 
 import Typewriter from "@/components/Typewriter"
 import { useCursorContext } from "@/contexts/CursorContext"
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "motion/react"
+import { motion, useScroll, useMotionValueEvent } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
 const IMAGES = Array.from({ length: 9 }, (_, i) => `/breakit/breakit_${i}.png`)
@@ -37,10 +32,12 @@ export default function BreakIt() {
     target: containerRef,
     offset: ["start start", "end end"],
   })
-  const step = useTransform(scrollYProgress, [0, 1], [0, IMAGES.length - 1])
   const [index, setIndex] = useState(0)
-  useMotionValueEvent(step, "change", (v) => {
-    const next = Math.min(IMAGES.length - 1, Math.max(0, Math.floor(v)))
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const next = Math.min(
+      IMAGES.length - 1,
+      Math.floor(v * IMAGES.length)
+    )
     setIndex(next)
   })
 
@@ -56,7 +53,7 @@ export default function BreakIt() {
             key={index}
             src={IMAGES[index]}
             alt={`BreakIt screenshot ${index}`}
-            className="max-h-full w-auto"
+            className="max-h-[80vh] w-auto max-w-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
