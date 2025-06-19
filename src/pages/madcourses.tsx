@@ -14,13 +14,13 @@ export default function MadCourses() {
 
   return (
     <>
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-black">
+      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-white">
         <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
-          <Typewriter lines={["MadCourses"]} speed={35} />
+          <Typewriter lines={["MadCourses"]} speed={35} bold={["MadCourses"]}/>
         </span>
       </main>
 
-      <section className="px-6 mt-8 text-black">
+      <section className="px-6 mt-8 text-white">
         <h2 className="text-2xl font-semibold mb-4">Project Overview</h2>
         <p className="max-w-xl">This section will describe the MadCourses desktop application.</p>
       </section>
