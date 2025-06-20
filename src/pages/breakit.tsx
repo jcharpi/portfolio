@@ -6,6 +6,7 @@ import {
   useScroll,
   useSpring,
   useTransform,
+  useInView,
 } from "motion/react"
 import { useRef } from "react"
 import Typewriter from "@/components/Typewriter"
@@ -31,6 +32,7 @@ function ImageCard({ id, text }: { id: number; text: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
+  const inView = useInView(ref, { once: true })
 
   return (
     <section className="h-screen snap-start grid grid-cols-3 items-center gap-x-16">
@@ -50,7 +52,7 @@ function ImageCard({ id, text }: { id: number; text: string }) {
         style={{ y }}
         className="col-span-2 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
       >
-        <Typewriter lines={[text]} speed={35} bold={[text]} />
+        {inView && <Typewriter lines={[text]} speed={35} bold={[text]} />}
       </motion.div>
     </section>
   )
