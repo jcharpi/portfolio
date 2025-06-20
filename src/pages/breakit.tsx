@@ -11,11 +11,23 @@ import { useRef } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
+const captions = [
+  "User dashboard",
+  "Puzzle selection",
+  "Level details",
+  "Game board",
+  "Scoring summary",
+  "New challenge",
+  "Achievement unlocked",
+  "Share results",
+  "Leaderboard",
+]
+
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
-function ImageCard({ id }: { id: number }) {
+function ImageCard({ id, text }: { id: number; text: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
@@ -34,14 +46,14 @@ function ImageCard({ id }: { id: number }) {
         </div>
       </div>
 
-      <motion.h2
+      <motion.div
         style={{ y }}
-        className="absolute left-[calc(50%+300px)] top-1/2 -translate-y-1/2
-                   text-5xl font-bold tracking-tight text-white
+        className="absolute left-[calc(50%+400px)] top-1/2 -translate-y-1/2
+                   text-7xl font-bold tracking-tight text-white
                    pointer-events-none select-none"
       >
-        {`#00${id}`}
-      </motion.h2>
+        <Typewriter lines={[text]} speed={35} />
+      </motion.div>
     </section>
   )
 }
@@ -62,7 +74,7 @@ export default function Parallax() {
 
       <div className="snap-y snap-mandatory">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((img) => (
-          <ImageCard key={img} id={img} />
+          <ImageCard key={img} id={img} text={captions[img]} />
         ))}
         <motion.div
           className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
