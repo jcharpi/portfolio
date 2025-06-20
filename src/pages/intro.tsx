@@ -18,7 +18,7 @@ export default function Intro() {
   }, [setTargets])
 
   return (
-    <>
+    <div className="h-screen">
       {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-black">
         <p>
@@ -79,6 +79,6 @@ export default function Intro() {
           <FaLinkedin className="w-6 h-6 text-black hover:text-gray-600 transition" />
         </a>
       </footer>
-    </>
+    </div>
   )
 }

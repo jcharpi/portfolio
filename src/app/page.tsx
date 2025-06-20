@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <ColorCycleProvider>
       <CursorProvider>
-        <div className="relative h-screen overflow-hidden font-sans">
+        <div className="relative overflow-hidden font-sans">
           <ColorBackground />
           <PageSelector />
           <Cursor />
