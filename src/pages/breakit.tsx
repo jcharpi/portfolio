@@ -8,6 +8,8 @@ import {
   useTransform,
 } from "motion/react"
 import { useRef } from "react"
+import { PhoneMockup } from 'phone-mockup-react';
+import 'phone-mockup-react/dist/styles.css';
 import Image from "next/image"
 
 /**
@@ -34,14 +36,16 @@ function ImageCard({ id }: ImageCardProps) {
         ref={ref}
         className="relative w-72 h-[400px] md:w-72 md:h-[400px] sm:w-44 sm:h-52 m-5 bg-gray-100 overflow-hidden"
       >
-        <Image
-          src={`/breakit/breakit_${id}.png`}
-          alt={`Breakout #00${id}`}
-          fill
-          sizes="(max-width: 640px) 176px, 288px"
-          className="object-cover"
-          priority={id === 0}
-        />
+        <PhoneMockup model="iphone-16">
+          <Image
+            src={`/breakit/breakit_${id}.png`}
+            alt={`Breakout #00${id}`}
+            fill
+            sizes="(max-width: 640px) 176px, 288px"
+            className="object-cover"
+            priority={id === 0}
+          />
+        </PhoneMockup>
       </div>
 
       {/* Floating index that glides vertically with the scroll */}
