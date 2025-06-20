@@ -21,6 +21,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     width: 0,
     height: 0,
   })
+  const [snappedElementRadius, setSnappedElementRadius] = useState(0)
   const { colorIndex, setColorIndex } = useColorCycle()
 
   const mousePosRef = useRef<Position>({ x: mouseX, y: mouseY })
@@ -43,6 +44,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     setDisplayPosition,
     setIsSnapped,
     setSnappedElementSize,
+    setSnappedElementRadius,
     snappedElementRef
   )
 
@@ -58,6 +60,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     displayPosition,
     isSnapped,
     snappedElementSize,
+    snappedElementRadius,
     leftColor,
     rightColor,
   }
@@ -92,6 +95,7 @@ function useCursorPositionUpdate(
   setDisplayPosition: React.Dispatch<React.SetStateAction<Position>>,
   setIsSnapped: React.Dispatch<React.SetStateAction<boolean>>,
   setSnappedElementSize: React.Dispatch<React.SetStateAction<Size>>,
+  setSnappedElementRadius: React.Dispatch<React.SetStateAction<number>>,
   snappedElementRef: React.MutableRefObject<HTMLElement | null>
 ) {
   useEffect(() => {
@@ -100,6 +104,7 @@ function useCursorPositionUpdate(
       let isCurrentlySnapped = false
       let newPosition = { x, y }
       let newSize = { width: 0, height: 0 }
+      let newRadius = 0
       snappedElementRef.current = null
 
       // Check all targets for snapping
@@ -110,12 +115,12 @@ function useCursorPositionUpdate(
         const rect = element.getBoundingClientRect()
         const centerX = rect.left + rect.width / 2
         const centerY = rect.top + rect.height / 2
-        const distance = Math.hypot(centerX - x, centerY - y)
 
-        if (distance < 60) {
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
           isCurrentlySnapped = true
           newPosition = { x: centerX, y: centerY }
           newSize = { width: rect.width, height: rect.height }
+          newRadius = parseFloat(window.getComputedStyle(element).borderRadius) || 0
           snappedElementRef.current = element
           break
         }
@@ -138,6 +143,7 @@ function useCursorPositionUpdate(
             ? prev
             : newSize
         )
+        setSnappedElementRadius((prev) => (prev === newRadius ? prev : newRadius))
       }
     }
 
@@ -153,6 +159,7 @@ function useCursorPositionUpdate(
     setDisplayPosition,
     setIsSnapped,
     setSnappedElementSize,
+    setSnappedElementRadius,
     snappedElementRef,
   ])
 }
@@ -164,6 +171,7 @@ export default function Cursor() {
     displayPosition,
     isSnapped,
     snappedElementSize,
+    snappedElementRadius,
     leftColor,
     rightColor,
   } = useCursorBehavior(targets)
@@ -176,7 +184,7 @@ export default function Cursor() {
     >
       <div className="relative pointer-events-none">
         {isSnapped ? (
-          <SnappedElementVisual size={snappedElementSize} />
+          <SnappedElementVisual size={snappedElementSize} radius={snappedElementRadius} />
         ) : (
           <NormalCursorVisual leftColor={leftColor} rightColor={rightColor} />
         )}
@@ -186,13 +194,14 @@ export default function Cursor() {
 }
 
 // Sub-components for better readability
-function SnappedElementVisual({ size }: { size: Size }) {
+function SnappedElementVisual({ size, radius }: { size: Size; radius: number }) {
   return (
     <div
-      className="rounded-md bg-black opacity-50"
+      className="bg-black opacity-50"
       style={{
         width: size.width + 16,
         height: size.height + 16,
+        borderRadius: radius + 8,
       }}
     />
   )

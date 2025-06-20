@@ -40,8 +40,8 @@ function useParallax(value: MotionValue<number>, distance: number) {
 
 function ImageCard({ id, innerRef }: { id: number; innerRef: RefObject<HTMLDivElement | null> }) {
   return (
-    <div ref={innerRef} className="relative w-5/12 h-10/12 justify-self-center">
-      <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+    <div className="relative w-5/12 h-10/12 justify-self-center">
+      <div ref={innerRef} className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
         <Image
           src={`/breakit/breakit_${id}.png`}
           alt={`BreakIt ${id}`}
@@ -65,12 +65,12 @@ function SnappableImageCard({ innerRef }: { innerRef: RefObject<HTMLDivElement |
   const id = images[index]
 
   return (
-    <div
-      ref={innerRef}
-      className="relative w-5/12 h-10/12 justify-self-center"
-      onClick={handleClick}
-    >
-      <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+    <div className="relative w-5/12 h-10/12 justify-self-center">
+      <div
+        ref={innerRef}
+        className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
+        onClick={handleClick}
+      >
         <Image
           src={`/breakit/breakit_${id}.png`}
           alt={`BreakIt ${id}`}
