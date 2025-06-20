@@ -17,11 +17,6 @@ const titles = [
   "My Goals",
   "The Challenge",
   "What's Different?",
-  "Scoring summary",
-  "New challenge",
-  "Achievement unlocked",
-  "Share results",
-  "Leaderboard",
 ]
 
 const descriptions = [
@@ -29,11 +24,6 @@ const descriptions = [
   "When I begin a new project, I start by identifying the technologies I want to learn, though inevitably, additional tools emerge as development unfolds. BreakIt was my first React Native app, building on my existing React experience and giving me hands-on insight into cross-platform mobile development, which offers clear advantages over maintaining separate native codebases. Furthermore, I also set out to deepen my understanding of integrating TypeScript within the React Native library and persisting data on app close.",
   "My greatest challenge in developing BreakIt was managing several nested Context providers, which quickly led to tangled and confusing state handling. To resolve this, I adopted Redux Toolkit, a library that consolidates state management with persistence, stores, and reducers. Although learning Redux Toolkit required me to step beyond the React material covered in my university’s Building User Interfaces course and refactor much of my codebase, it proved to be the perfect solution for my Context issues and introduced me to a powerful state-management tool I’ll continue using in future projects.",
   "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Scoring summary",
-  "New challenge",
-  "Achievement unlocked",
-  "Share results",
-  "Leaderboard",
 ]
 
 const descriptions_bold = [
@@ -41,11 +31,6 @@ const descriptions_bold = [
   ["learn", "React", "Native", "TypeScript", "persisting", "data"],
   ["challenge", "Context", "state", "Redux", "Toolkit", "React", "Building", "User", "Interfaces"],
   ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["Scoring summary"],
-  ["New challenge"],
-  ["Achievement unlocked"],
-  ["Share results"],
-  ["Leaderboard"],
 ]
 
 function useParallax(value: MotionValue<number>, distance: number) {
@@ -116,7 +101,7 @@ export default function Parallax() {
       </span>
 
       <div className="snap-y snap-mandatory">
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((img) => (
+        {[0, 1, 2, 3].map((img) => (
           <ImageCard
             key={img}
             id={img}
