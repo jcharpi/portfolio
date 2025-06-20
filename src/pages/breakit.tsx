@@ -35,12 +35,12 @@ function ImageCard({ id }: ImageCardProps) {
         className="relative w-72 h-[400px] md:w-72 md:h-[400px] sm:w-44 sm:h-52 m-5 bg-gray-100 overflow-hidden"
       >
         <Image
-          src={`/photos/cityscape/${id}.jpg`}
-          alt={`Cityscape #00${id}`}
+          src={`/breakit/breakit_${id}.png`}
+          alt={`Breakout #00${id}`}
           fill
           sizes="(max-width: 640px) 176px, 288px"
           className="object-cover"
-          priority={id === 1}
+          priority={id === 0}
         />
       </div>
 
@@ -73,7 +73,7 @@ export default function Parallax() {
   return (
     // Enable vertical snap behaviour on the whole page
     <div id="parallax-demo" className="snap-y snap-mandatory">
-      {[1, 2, 3, 4, 5].map((img) => (
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((img) => (
         <ImageCard key={img} id={img} />
       ))}
 
