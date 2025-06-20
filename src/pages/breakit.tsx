@@ -1,4 +1,4 @@
-/*
+import { useRef } from "react"
  * Parallax.tsx – FIXED overlay logic (v2)
  *
  * The overlay for index 3 now uses start/end sentinels so it stays visible
@@ -90,14 +90,9 @@ function ImageCard({ id, title, description, bold }: ImageCardProps) {
         <motion.div
           style={{ y }}
           className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
-        >
-          <Typewriter lines={[title]} speed={35} bold={[title]} />
-          <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-            <Typewriter lines={[description]} speed={3} bold={bold} />
-          </div>
-        </motion.div>
-      )}
-    </section>
+  const startInView = useInView(startRef, { margin: "0px 0px -100% 0px" })
+  const endInView = useInView(endRef, { margin: "0px 0px -100% 0px" })
+  const show = startInView && !endInView
   );
 }
 
