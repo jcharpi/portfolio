@@ -57,16 +57,14 @@ function ImageCard({
 
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
-      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/breakit/breakit_${id}.png`}
-            alt={`BreakIt ${id}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={id === 0}
-          />
-        </div>
+      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center rounded-[4rem] bg-black shadow-2xl">
+        <Image
+          src={`/breakit/breakit_${id}.png`}
+          alt={`BreakIt ${id}`}
+          fill
+          className="p-2 rounded-[4rem]"
+          priority={id === 0}
+        />
       </div>
 
       <motion.div
