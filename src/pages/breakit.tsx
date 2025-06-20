@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef } from "react"
+import React, { useRef } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -37,11 +37,61 @@ function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
-function ImageCard({
+function ImageCard({ id }: { id: number }) {
+  return (
+    <div className="relative w-5/12 h-10/12 justify-self-center">
+      <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+        <Image
+          src={`/breakit/breakit_${id}.png`}
+          alt={`BreakIt ${id}`}
+          fill
+          className="p-2 rounded-[4rem]"
+          priority={id === 0}
+        />
+      </div>
+    </div>
+  )
+}
+
+function ImageText({
+  scrollRef,
+  title,
+  description,
+  bold,
+}: {
+  scrollRef: React.RefObject<HTMLDivElement>
+  title: string
+  description: string
+  bold: string[]
+}) {
+  const { scrollYProgress } = useScroll({ target: scrollRef })
+  const y = useParallax(scrollYProgress, 300)
+  const inView = useInView(scrollRef, {
+    margin: "0px 0px -800px 0px",
+  })
+
+  return (
+    <motion.div
+      style={{ y }}
+      className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+    >
+      {inView && (
+        <div>
+          <Typewriter lines={[title]} speed={35} bold={[title]} />
+          <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <Typewriter lines={[description]} speed={3} bold={bold} />
+          </div>
+        </div>
+      )}
+    </motion.div>
+  )
+}
+
+function ImageSection({
   id,
   title,
   description,
-  bold
+  bold,
 }: {
   id: number
   title: string
@@ -49,39 +99,18 @@ function ImageCard({
   bold: string[]
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref })
-  const y = useParallax(scrollYProgress, 300)
-  const inView = useInView(ref, {
-    margin: "0px 0px -800px 0px",
-  })
 
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/breakit/breakit_${id}.png`}
-            alt={`BreakIt ${id}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={id === 0}
-          />
-        </div>
+        <ImageCard id={id} />
       </div>
-
-      <motion.div
-        style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
-      >
-        {inView && (
-          <div>
-            <Typewriter lines={[title]} speed={35} bold={[title]} />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={[description]} speed={3} bold={bold}/>
-            </div>
-          </div>
-        )}
-      </motion.div>
+      <ImageText
+        scrollRef={ref}
+        title={title}
+        description={description}
+        bold={bold}
+      />
     </section>
   )
 }
@@ -102,7 +131,7 @@ export default function Parallax() {
 
       <div className="snap-y snap-mandatory">
         {[0, 1, 2, 3].map((img) => (
-          <ImageCard
+          <ImageSection
             key={img}
             id={img}
             title={titles[img]}
