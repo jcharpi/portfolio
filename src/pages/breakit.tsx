@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -49,24 +49,61 @@ function ImageCard({
   bold: string[]
 }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [imgIndex, setImgIndex] = useState(id)
+  const intervalRef = useRef<NodeJS.Timeout>()
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
   const inView = useInView(ref, {
     margin: "0px 0px -800px 0px",
   })
 
+  const handleHoverStart = () => {
+    if (id !== 3) return
+    let current = 3
+    setImgIndex(current)
+    intervalRef.current = setInterval(() => {
+      current = current < 7 ? current + 1 : 3
+      setImgIndex(current)
+    }, 1000)
+  }
+
+  const handleHoverEnd = () => {
+    if (id !== 3) return
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+    setImgIndex(3)
+  }
+
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/breakit/breakit_${id}.png`}
-            alt={`BreakIt ${id}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={id === 0}
-          />
-        </div>
+        {id === 3 ? (
+          <motion.div
+            className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
+            whileHover={{ scale: 1.05 }}
+            onHoverStart={handleHoverStart}
+            onHoverEnd={handleHoverEnd}
+          >
+            <Image
+              src={`/breakit/breakit_${imgIndex}.png`}
+              alt={`BreakIt ${id}`}
+              fill
+              className="p-2 rounded-[4rem]"
+              priority={id === 0}
+            />
+          </motion.div>
+        ) : (
+          <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+            <Image
+              src={`/breakit/breakit_${imgIndex}.png`}
+              alt={`BreakIt ${id}`}
+              fill
+              className="p-2 rounded-[4rem]"
+              priority={id === 0}
+            />
+          </div>
+        )}
       </div>
 
       <motion.div
