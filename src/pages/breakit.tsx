@@ -34,7 +34,7 @@ function ImageCard({ id, text }: { id: number; text: string }) {
 
   return (
     <section className="h-screen snap-start flex items-center justify-center relative">
-      <div ref={ref} className="relative w-82 h-[700px]">
+      <div ref={ref} className="relative w-82 h-[700px] -translate-x-20">
         <div className="relative w-full h-full rounded-[2.5rem] bg-black shadow-2xl">
           <Image
             src={`/breakit/breakit_${id}.png`}
@@ -46,14 +46,14 @@ function ImageCard({ id, text }: { id: number; text: string }) {
         </div>
       </div>
 
-      <motion.div
+      <motion.h2
         style={{ y }}
-        className="absolute left-[calc(50%+400px)] top-1/2 -translate-y-1/2
+        className="absolute left-[calc(50%+300px)] top-1/2 -translate-y-1/2
                    text-7xl font-bold tracking-tight text-white
                    pointer-events-none select-none"
       >
-        <Typewriter lines={[text]} speed={35} />
-      </motion.div>
+        {text}
+      </motion.h2>
     </section>
   )
 }
