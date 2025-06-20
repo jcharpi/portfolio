@@ -10,6 +10,7 @@ import {
 } from "motion/react"
 import { useRef } from "react"
 import Typewriter from "@/components/Typewriter"
+import Row from "@/components/Row"
 import Image from "next/image"
 
 const titles = [
@@ -56,32 +57,44 @@ function ImageCard({
   })
 
   return (
-    <section className="h-screen snap-start grid grid-cols-2 items-center">
-      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/breakit/breakit_${id}.png`}
-            alt={`BreakIt ${id}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={id === 0}
-          />
-        </div>
-      </div>
-
-      <motion.div
-        style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
-      >
-        {inView && (
-          <div>
-            <Typewriter lines={[title]} speed={35} bold={[title]} />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={[description]} speed={3} bold={bold}/>
-            </div>
-          </div>
-        )}
-      </motion.div>
+    <section className="h-screen snap-start">
+      <Row
+        columns={3}
+        className="h-full items-center"
+        items={[
+          [
+            <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center" key="img">
+              <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+                <Image
+                  src={`/breakit/breakit_${id}.png`}
+                  alt={`BreakIt ${id}`}
+                  fill
+                  className="p-2 rounded-[4rem]"
+                  priority={id === 0}
+                />
+              </div>
+            </div>,
+            1,
+          ],
+          [
+            <motion.div
+              style={{ y }}
+              className="text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+              key="text"
+            >
+              {inView && (
+                <div>
+                  <Typewriter lines={[title]} speed={35} bold={[title]} />
+                  <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+                    <Typewriter lines={[description]} speed={3} bold={bold} />
+                  </div>
+                </div>
+              )}
+            </motion.div>,
+            2,
+          ],
+        ]}
+      />
     </section>
   )
 }
