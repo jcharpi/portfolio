@@ -69,7 +69,7 @@ function ImageSection({
   scrollRef,
 }: {
   id: number;
-  scrollRef?: React.RefObject<HTMLDivElement>;
+  scrollRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
     <div
@@ -95,7 +95,7 @@ function TextSection({
   description,
   bold,
 }: {
-  scrollRef: React.RefObject<HTMLDivElement>;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
   title: string;
   description: string;
   bold: string[];
