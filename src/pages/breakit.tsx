@@ -49,13 +49,13 @@ function ImageCard({ id }: { id: number }) {
 export default function Parallax() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 1000,
+    stiffness: 100,
     damping: 50,
     restDelta: 0.1,
   })
 
   return (
-    <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-white">
+    <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
       <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
         <Typewriter lines={["BreakIt"]} speed={35} bold={["BreakIt"]} />
       </span>
