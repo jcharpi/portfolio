@@ -8,7 +8,8 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef, createRef, RefObject } from "react"
+import { useRef, createRef, RefObject, useState, useEffect } from "react"
+import { useCursorContext } from "@/contexts/CursorContext"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -47,6 +48,34 @@ function ImageCard({ id, innerRef }: { id: number; innerRef: RefObject<HTMLDivEl
           fill
           className="p-2 rounded-[4rem]"
           priority={id === 0}
+        />
+      </div>
+    </div>
+  )
+}
+
+function SnappableImageCard({ innerRef }: { innerRef: RefObject<HTMLDivElement | null> }) {
+  const images = [3, 4, 5, 6, 7]
+  const [index, setIndex] = useState(0)
+
+  const handleClick = () => {
+    setIndex((i) => (i + 1) % images.length)
+  }
+
+  const id = images[index]
+
+  return (
+    <div
+      ref={innerRef}
+      className="relative w-5/12 h-10/12 justify-self-center"
+      onClick={handleClick}
+    >
+      <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+        <Image
+          src={`/breakit/breakit_${id}.png`}
+          alt={`BreakIt ${id}`}
+          fill
+          className="p-2 rounded-[4rem]"
         />
       </div>
     </div>
@@ -99,6 +128,13 @@ export default function Parallax() {
     Array.from({ length: titles.length }, () => createRef<HTMLDivElement>())
   ).current
 
+  const { setTargets } = useCursorContext()
+
+  useEffect(() => {
+    setTargets([refs[3]])
+    return () => setTargets([])
+  }, [refs, setTargets])
+
   return (
     <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
       <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
@@ -108,7 +144,11 @@ export default function Parallax() {
       <div className="snap-y snap-mandatory">
         {[0, 1, 2, 3].map((img) => (
           <section key={img} className="h-screen snap-start grid grid-cols-2 items-center">
-            <ImageCard id={img} innerRef={refs[img]} />
+            {img === 3 ? (
+              <SnappableImageCard innerRef={refs[img]} />
+            ) : (
+              <ImageCard id={img} innerRef={refs[img]} />
+            )}
             <TextCard
               scrollRef={refs[img]}
               title={titles[img]}
