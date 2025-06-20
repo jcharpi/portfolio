@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -50,7 +50,8 @@ function ImageCard({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [imgIndex, setImgIndex] = useState(id)
-  const intervalRef = useRef<NodeJS.Timeout>()
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const isFirstImage = id === 0
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
   const inView = useInView(ref, {
@@ -75,6 +76,14 @@ function ImageCard({
     setImgIndex(3)
   }
 
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [])
+
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
@@ -90,7 +99,7 @@ function ImageCard({
               alt={`BreakIt ${id}`}
               fill
               className="p-2 rounded-[4rem]"
-              priority={id === 0}
+              priority={isFirstImage}
             />
           </motion.div>
         ) : (
@@ -100,7 +109,7 @@ function ImageCard({
               alt={`BreakIt ${id}`}
               fill
               className="p-2 rounded-[4rem]"
-              priority={id === 0}
+              priority={isFirstImage}
             />
           </div>
         )}
