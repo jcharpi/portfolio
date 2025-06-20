@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef } from "react"
+import { useRef, createRef, RefObject } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -37,54 +37,56 @@ function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
-function ImageCard({
-  id,
+function ImageCard({ id, innerRef }: { id: number; innerRef: RefObject<HTMLDivElement | null> }) {
+  return (
+    <div ref={innerRef} className="relative w-5/12 h-10/12 justify-self-center">
+      <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+        <Image
+          src={`/breakit/breakit_${id}.png`}
+          alt={`BreakIt ${id}`}
+          fill
+          className="p-2 rounded-[4rem]"
+          priority={id === 0}
+        />
+      </div>
+    </div>
+  )
+}
+
+function TextCard({
+  scrollRef,
   title,
   description,
-  bold
+  bold,
 }: {
-  id: number
+  scrollRef: RefObject<HTMLDivElement | null>
   title: string
   description: string
   bold: string[]
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref })
+  const { scrollYProgress } = useScroll({ target: scrollRef })
   const y = useParallax(scrollYProgress, 300)
-  const inView = useInView(ref, {
+  const inView = useInView(scrollRef, {
     margin: "0px 0px -800px 0px",
   })
 
   return (
-    <section className="h-screen snap-start grid grid-cols-2 items-center">
-      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/breakit/breakit_${id}.png`}
-            alt={`BreakIt ${id}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={id === 0}
-          />
-        </div>
-      </div>
-
-      <motion.div
-        style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
-      >
-        {inView && (
-          <div>
-            <Typewriter lines={[title]} speed={35} bold={[title]} />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={[description]} speed={3} bold={bold}/>
-            </div>
+    <motion.div
+      style={{ y }}
+      className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+    >
+      {inView && (
+        <div>
+          <Typewriter lines={[title]} speed={35} bold={[title]} />
+          <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <Typewriter lines={[description]} speed={3} bold={bold} />
           </div>
-        )}
-      </motion.div>
-    </section>
+        </div>
+      )}
+    </motion.div>
   )
 }
+
 
 export default function Parallax() {
   const { scrollYProgress } = useScroll()
@@ -93,6 +95,9 @@ export default function Parallax() {
     damping: 50,
     restDelta: 0.1,
   })
+  const refs = useRef(
+    Array.from({ length: titles.length }, () => createRef<HTMLDivElement>())
+  ).current
 
   return (
     <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
@@ -102,13 +107,15 @@ export default function Parallax() {
 
       <div className="snap-y snap-mandatory">
         {[0, 1, 2, 3].map((img) => (
-          <ImageCard
-            key={img}
-            id={img}
-            title={titles[img]}
-            description={descriptions[img]}
-            bold={descriptions_bold[img]}
-          />
+          <section key={img} className="h-screen snap-start grid grid-cols-2 items-center">
+            <ImageCard id={img} innerRef={refs[img]} />
+            <TextCard
+              scrollRef={refs[img]}
+              title={titles[img]}
+              description={descriptions[img]}
+              bold={descriptions_bold[img]}
+            />
+          </section>
         ))}
         <motion.div
           className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
