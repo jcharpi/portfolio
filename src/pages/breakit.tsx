@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Typewriter from "@/components/Typewriter";
 import Image from "next/image";
 
@@ -123,18 +123,51 @@ function TextSection({
   );
 }
 
+function ImageOnlySection({ id }: { id: number }) {
+  return (
+    <section className="h-screen snap-start grid grid-cols-2 items-center">
+      <ImageSection id={id} />
+      <div className="col-span-1" />
+    </section>
+  );
+}
+
+function StickyText({
+  title,
+  description,
+  bold,
+}: {
+  title: string;
+  description: string;
+  bold: string[];
+}) {
+  return (
+    <div className="fixed top-0 right-0 left-0 pointer-events-none select-none mt-16">
+      <div className="text-8xl font-bold tracking-tight text-white">
+        <Typewriter lines={[title]} speed={35} bold={[title]} />
+        <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+          <Typewriter lines={[description]} speed={3} bold={bold} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BreakItSection({
   id,
   title,
   description,
   bold,
+  sectionRef,
 }: {
   id: number;
   title: string;
   description: string;
   bold: string[];
+  sectionRef?: React.RefObject<HTMLDivElement | null>;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const ref = sectionRef ?? innerRef;
 
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
@@ -157,6 +190,15 @@ export default function Parallax() {
     restDelta: 0.1,
   });
 
+  const [showSticky, setShowSticky] = useState(false);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(stickyRef);
+
+  useEffect(() => {
+    if (!inView) setShowSticky(true);
+    else setShowSticky(false);
+  }, [inView]);
+
   return (
     <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
       <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
@@ -164,23 +206,40 @@ export default function Parallax() {
       </span>
 
       <div className="snap-y snap-mandatory">
-        {[1, 2, 3, 4, 5, 6, 7].map((img, idx) => {
-          const textIdx = idx < 2 ? idx : 2;
-          return (
-            <BreakItSection
-              key={img}
-              id={img}
-              title={titles[textIdx]}
-              description={descriptions[textIdx]}
-              bold={descriptions_bold[textIdx]}
-            />
-          );
-        })}
+        <BreakItSection
+          id={1}
+          title={titles[0]}
+          description={descriptions[0]}
+          bold={descriptions_bold[0]}
+        />
+        <BreakItSection
+          id={2}
+          title={titles[1]}
+          description={descriptions[1]}
+          bold={descriptions_bold[1]}
+        />
+        <BreakItSection
+          id={3}
+          title={titles[2]}
+          description={descriptions[2]}
+          bold={descriptions_bold[2]}
+          sectionRef={stickyRef}
+        />
+        {[4, 5, 6, 7].map((img) => (
+          <ImageOnlySection key={img} id={img} />
+        ))}
         <motion.div
           className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
           style={{ scaleX }}
         />
       </div>
+      {showSticky && (
+        <StickyText
+          title={titles[2]}
+          description={descriptions[2]}
+          bold={descriptions_bold[2]}
+        />
+      )}
     </main>
   );
 }
