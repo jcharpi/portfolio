@@ -33,8 +33,8 @@ function ImageCard({ id, text }: { id: number; text: string }) {
   const y = useParallax(scrollYProgress, 300)
 
   return (
-    <section className="h-screen snap-start flex items-center justify-center relative">
-      <div ref={ref} className="relative w-82 h-[700px] -translate-x-20">
+    <section className="h-screen snap-start grid grid-cols-3 items-center gap-x-16">
+      <div ref={ref} className="relative w-82 h-[700px] justify-self-center">
         <div className="relative w-full h-full rounded-[2.5rem] bg-black shadow-2xl">
           <Image
             src={`/breakit/breakit_${id}.png`}
@@ -46,14 +46,12 @@ function ImageCard({ id, text }: { id: number; text: string }) {
         </div>
       </div>
 
-      <motion.h2
+      <motion.div
         style={{ y }}
-        className="absolute left-[calc(50%+300px)] top-1/2 -translate-y-1/2
-                   text-7xl font-bold tracking-tight text-white
-                   pointer-events-none select-none"
+        className="col-span-2 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
       >
-        {text}
-      </motion.h2>
+        <Typewriter lines={[text]} speed={35} bold={[text]} />
+      </motion.div>
     </section>
   )
 }
