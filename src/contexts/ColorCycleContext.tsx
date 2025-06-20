@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react"
 
-export const ACCENT_COLORS = ["#EFF1F3", "#586183", "#EA3A35"] as const
+export const ACCENT_COLORS = ["#EFF1F3", "#6F799F", "#EA3A35"] as const
 
 interface ColorCycleContextValue {
   colorIndex: number
