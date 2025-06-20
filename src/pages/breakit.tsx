@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -86,6 +86,63 @@ function ImageCard({
   )
 }
 
+function ImageOnlyCard({ id }: { id: number }) {
+  return (
+    <section className="h-screen snap-start grid grid-cols-2 items-center">
+      <div className="relative w-5/12 h-10/12 justify-self-center">
+        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+          <Image
+            src={`/breakit/breakit_${id}.png`}
+            alt={`BreakIt ${id}`}
+            fill
+            className="p-2 rounded-[4rem]"
+          />
+        </div>
+      </div>
+      <div className="col-span-1" />
+    </section>
+  )
+}
+
+function ExtraImages({
+  ids,
+  title,
+  description,
+}: {
+  ids: number[]
+  title: string
+  description: string
+}) {
+  const startRef = useRef<HTMLDivElement>(null)
+  const endRef = useRef<HTMLDivElement>(null)
+  const startInView = useInView(startRef)
+  const endInView = useInView(endRef)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    if (startInView) setShow(true)
+    if (endInView) setShow(false)
+  }, [startInView, endInView])
+
+  return (
+    <div>
+      <div ref={startRef}></div>
+      {show && (
+        <div className="fixed top-1/3 right-0 w-5/12 pointer-events-none select-none text-8xl font-bold tracking-tight text-white">
+          <p>{title}</p>
+          <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <p>{description}</p>
+          </div>
+        </div>
+      )}
+      {ids.map((img) => (
+        <ImageOnlyCard key={img} id={img} />
+      ))}
+      <div ref={endRef}></div>
+    </div>
+  )
+}
+
 export default function Parallax() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -110,6 +167,11 @@ export default function Parallax() {
             bold={descriptions_bold[img]}
           />
         ))}
+        <ExtraImages
+          ids={[4, 5, 6, 7]}
+          title={titles[3]}
+          description={descriptions[3]}
+        />
         <motion.div
           className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
           style={{ scaleX }}
