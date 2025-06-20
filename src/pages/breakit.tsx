@@ -16,12 +16,12 @@ const titles = [
   "Welcome to BreakIt!",
   "My Goals",
   "The Challenge",
-  "What's Different?",
-  "What's Different?",
-  "What's Different?",
-  "What's Different?",
-  "What's Different?",
-  "What's Different?",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
 ]
 
 const descriptions = [
@@ -29,11 +29,12 @@ const descriptions = [
   "When I begin a new project, I start by identifying the technologies I want to learn, though inevitably, additional tools emerge as development unfolds. BreakIt was my first React Native app, building on my existing React experience and giving me hands-on insight into cross-platform mobile development, which offers clear advantages over maintaining separate native codebases. Furthermore, I also set out to deepen my understanding of integrating TypeScript within the React Native library and persisting data on app close.",
   "My greatest challenge in developing BreakIt was managing several nested Context providers, which quickly led to tangled and confusing state handling. To resolve this, I adopted Redux Toolkit, a library that consolidates state management with persistence, stores, and reducers. Although learning Redux Toolkit required me to step beyond the React material covered in my university’s Building User Interfaces course and refactor much of my codebase, it proved to be the perfect solution for my Context issues and introduced me to a powerful state-management tool I’ll continue using in future projects.",
   "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
-  "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
 ]
 
 const descriptions_bold = [
@@ -41,11 +42,11 @@ const descriptions_bold = [
   ["learn", "React", "Native", "TypeScript", "persisting", "data"],
   ["challenge", "Context", "state", "Redux", "Toolkit", "React", "Building", "User", "Interfaces"],
   ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
-  ["clean", "intuitive", "interface", "dynamic", "exploration", "simplicity", "discoverability"],
+  [],
+  [],
+  [],
+  [],
+  [],
 ]
 
 function useParallax(value: MotionValue<number>, distance: number) {
@@ -57,13 +58,13 @@ function ImageCard({
   title,
   description,
   bold,
-  sticky = false,
+  showText = true,
 }: {
   id: number
   title: string
   description: string
   bold: string[]
-  sticky?: boolean
+  showText?: boolean
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref })
@@ -86,19 +87,21 @@ function ImageCard({
         </div>
       </div>
 
-      <motion.div
-        style={sticky ? {} : { y }}
-        className={`col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none${sticky ? " sticky top-0 self-start pt-8" : ""}`}
-      >
-        {inView && (
-          <div>
-            <Typewriter lines={[title]} speed={35} bold={[title]} />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={[description]} speed={3} bold={bold}/>
+      {showText && (
+        <motion.div
+          style={{ y }}
+          className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+        >
+          {inView && (
+            <div>
+              <Typewriter lines={[title]} speed={35} bold={[title]} />
+              <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+                <Typewriter lines={[description]} speed={3} bold={bold} />
+              </div>
             </div>
-          </div>
-        )}
-      </motion.div>
+          )}
+        </motion.div>
+      )}
     </section>
   )
 }
@@ -118,16 +121,39 @@ export default function Parallax() {
       </span>
 
       <div className="snap-y snap-mandatory">
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((img) => (
+        {[0, 1, 2].map((img) => (
           <ImageCard
             key={img}
             id={img}
             title={titles[img]}
             description={descriptions[img]}
             bold={descriptions_bold[img]}
-            sticky={img >= 3}
           />
         ))}
+
+        <div className="grid grid-cols-2">
+          <div>
+            {[3, 4, 5, 6, 7, 8].map((img) => (
+              <ImageCard
+                key={img}
+                id={img}
+                title={titles[img]}
+                description={descriptions[img]}
+                bold={descriptions_bold[img]}
+                showText={false}
+              />
+            ))}
+          </div>
+          <div className="sticky top-0 self-start pt-8 pointer-events-none select-none">
+            <div className="text-8xl font-bold tracking-tight text-white">
+              <Typewriter lines={[titles[3]]} speed={35} bold={[titles[3]]} />
+            </div>
+            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+              <Typewriter lines={[descriptions[3]]} speed={3} bold={descriptions_bold[3]} />
+            </div>
+          </div>
+        </div>
+
         <motion.div
           className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
           style={{ scaleX }}
