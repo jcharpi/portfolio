@@ -8,7 +8,7 @@ import {
   useTransform,
   useInView,
 } from "motion/react"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 
@@ -51,6 +51,8 @@ function ImageCard({
   const ref = useRef<HTMLDivElement>(null)
   const [imgIndex, setImgIndex] = useState(id)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const titleLines = useMemo(() => [title], [title])
+  const descLines = useMemo(() => [description], [description])
   const isFirstImage = id === 0
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
@@ -121,9 +123,9 @@ function ImageCard({
       >
         {inView && (
           <div>
-            <Typewriter lines={[title]} speed={35} bold={[title]} />
+            <Typewriter lines={titleLines} speed={35} bold={[title]} />
             <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={[description]} speed={3} bold={bold}/>
+              <Typewriter lines={descLines} speed={3} bold={bold} />
             </div>
           </div>
         )}
@@ -134,6 +136,7 @@ function ImageCard({
 
 export default function Parallax() {
   const { scrollYProgress } = useScroll()
+  const breakItLines = useMemo(() => ["BreakIt"], [])
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 50,
@@ -143,7 +146,7 @@ export default function Parallax() {
   return (
     <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
       <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
-        <Typewriter lines={["BreakIt"]} speed={35} bold={["BreakIt"]} />
+        <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
       </span>
 
       <div className="snap-y snap-mandatory">
