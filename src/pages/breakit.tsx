@@ -13,9 +13,8 @@ import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 import { CARDS, Card } from "@/data/breakitCards"
 
-// Images 3 through 7 cycle on hover for the final card
 const CYCLE_START = 3
-const CYCLE_END = 7
+const CYCLE_END = 6
 
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
@@ -101,9 +100,13 @@ function ImageCard({
       >
         {inView && (
           <div>
-            <Typewriter lines={card.titleLines} speed={35} bold={[card.titleLines[0]]} />
+            <Typewriter
+              lines={card.titleLines}
+              speed={35}
+              bold={[card.titleLines[0]]}
+            />
             <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
+              <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
             </div>
           </div>
         )}

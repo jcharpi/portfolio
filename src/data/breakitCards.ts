@@ -57,7 +57,7 @@ export const CARDS: Card[] = [
     image: 3,
     titleLines: ["What's Different?"],
     descLines: [
-      "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend, Emily. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. Thanks Emily! 🎨",
+      "Although many habit-tracking apps exist, I wanted BreakIt to stand out with a more visual, less declarative design free of unnecessary complexity. I created a clean, intuitive interface that places users’ progress front and center—eliminating clutter while keeping the experience engaging thanks to the dynamic art created by my friend. Some features now invite exploration on the user’s part, striking a balance between simplicity and discoverability. 🎨",
     ],
     bold: [
       "clean",
