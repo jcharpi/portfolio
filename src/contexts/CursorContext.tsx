@@ -3,7 +3,6 @@
 import { createContext, useContext, useState } from "react"
 
 // Keeps track of DOM elements the custom cursor can snap to.
-
 export type TargetRef = React.RefObject<HTMLElement | null>
 
 interface CursorContextValue {

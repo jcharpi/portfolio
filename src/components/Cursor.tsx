@@ -5,7 +5,6 @@ import { useCursorContext } from "@/contexts/CursorContext"
 import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
 
 // Constants and types.
-
 type Position = { x: number; y: number }
 type Size = { width: number; height: number }
 

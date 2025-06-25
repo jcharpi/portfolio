@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 
 // Track the user's mouse coordinates.
-
 export default function useMousePosition() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 

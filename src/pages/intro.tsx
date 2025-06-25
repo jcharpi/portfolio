@@ -19,7 +19,6 @@ export default function Intro() {
 
   return (
     <div className="h-screen">
-      {/* ───────────────────────── HEADER ───────────────────────── */}
       <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-black">
         <p>
           <a
@@ -33,7 +32,6 @@ export default function Intro() {
         </p>
       </header>
 
-      {/* ───────────────────────── MAIN CONTENT ───────────────────────── */}
       <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-black">
         <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
           <Typewriter
@@ -48,7 +46,6 @@ export default function Intro() {
         </span>
       </main>
 
-      {/* ─────────────── GRADUATE IMAGE ─────────────── */}
       <Image
         src="/graduate.svg"
         alt="Graduate"
@@ -58,7 +55,6 @@ export default function Intro() {
         className="absolute bottom-0 right-1/12 h-3/8 sm:h-4/8 md:h-5/8 w-auto z-0"
       />
 
-      {/* ───────────────────────── FOOTER ───────────────────────── */}
       <footer className="absolute bottom-0 inset-x-0 h-12 flex items-center justify-start px-6 z-10 space-x-4">
         <a
           ref={githubRef}
