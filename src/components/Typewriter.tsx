@@ -23,15 +23,15 @@ const Typewriter = ({ lines, speed = 80, bold = [] }: TypewriterProps) => {
   const formatted = displayText.split("\n").map((line, lineIdx) => (
     <React.Fragment key={lineIdx}>
       {line.split(/(\s+)/).map((segment, segIdx) => {
-        // keep whitespace segments exactly as‑is
+        // Keep whitespace segments exactly as-is.
         if (/^\s+$/.test(segment)) return segment
 
-        // pull out any leading/trailing punctuation
+        // Pull out any leading or trailing punctuation.
         const match = segment.match(/^([A-Za-z0-9]+)([^A-Za-z0-9]*)$/)
         const word = match ? match[1] : segment // “Josh”
         const punctuation = match ? match[2] : "" // “,”
 
-        // decide whether the *word* (sans punctuation) should be bold
+        // Decide whether the word (sans punctuation) should be bold.
         return bold.includes(word) ? (
           <React.Fragment key={segIdx}>
             <strong className="font-bold">{word}</strong>
@@ -41,7 +41,7 @@ const Typewriter = ({ lines, speed = 80, bold = [] }: TypewriterProps) => {
           <React.Fragment key={segIdx}>{segment}</React.Fragment>
         )
       })}
-      {/* Insert <br/> after every line except the last */}
+      {/* Insert <br/> after every line except the last. */}
       {lineIdx < lines.length - 1 && <br />}
     </React.Fragment>
   ))

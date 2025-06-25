@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* Apply to ALL elements by default */
+/* Apply to all elements by default. */
 * {
-  cursor: none !important;            /* Hide cursor everywhere */
+  cursor: none !important;            /* Hide cursor everywhere. */
   -webkit-user-select: none;          /* Safari */
   -moz-user-select: none;             /* Firefox */
   -ms-user-select: none;              /* IE/Edge */
   user-select: none;                  /* Standard */
 }
 
-/* Exceptions for form elements and content editables */
+/* Exceptions for form elements and content editables. */
 input,
 textarea,
 select,
 button,
 [contenteditable] {
-  cursor: auto !important;            /* Show default cursor */
+  cursor: auto !important;            /* Show default cursor. */
   -webkit-user-select: text;          /* Safari */
   -moz-user-select: text;             /* Firefox */
   -ms-user-select: text;              /* IE/Edge */
@@ -46,26 +46,26 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Prevent blue highlight on tap for mobile */
+/* Prevent blue highlight on tap for mobile. */
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
 /* ─────────────────────────────────────────────── */
-/* Hide scrollbars everywhere (still scrollable)  */
+/* Hide scrollbars everywhere (still scrollable). */
 /* ─────────────────────────────────────────────── */
 
 html,
 body {
-  /* Internet Explorer 10/11 & Edge Legacy */
+  /* Internet Explorer 10/11 & Edge Legacy. */
   -ms-overflow-style: none;
 
-  /* Firefox */
+  /* Firefox. */
   scrollbar-width: none;
 }
 
-/* WebKit browsers (Chrome, Safari, Chromium-based Edge, etc.) */
+/* WebKit browsers (Chrome, Safari, Chromium-based Edge, etc.). */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none;                       /* Fully hides the bar */
+  display: none;                       /* Fully hides the bar. */
 }

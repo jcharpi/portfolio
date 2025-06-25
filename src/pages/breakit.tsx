@@ -13,13 +13,16 @@ import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 import { CARDS, Card } from "@/data/breakitCards"
 
+// Indices used when cycling through screenshots on hover.
 const CYCLE_START = 3
 const CYCLE_END = 6
 
+// Map scroll progress to a vertical offset for parallax motion.
 function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
+// Card displaying a screenshot with parallax title and description.
 function ImageCard({
   card,
   isHoverCard,
@@ -37,6 +40,7 @@ function ImageCard({
     margin: "0px 0px -800px 0px",
   })
 
+  // Begin cycling through additional screenshots on hover.
   const handleHoverStart = () => {
     if (!isHoverCard) return
     let current = CYCLE_START
@@ -47,6 +51,7 @@ function ImageCard({
     }, 1000)
   }
 
+  // Stop cycling screenshots when hover ends.
   const handleHoverEnd = () => {
     if (!isHoverCard) return
     if (intervalRef.current) {
@@ -55,6 +60,7 @@ function ImageCard({
     setImgIndex(CYCLE_START)
   }
 
+  // Clear any running interval when the component unmounts.
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
@@ -123,6 +129,7 @@ function ImageCard({
   )
 }
 
+// Page presenting BreakIt with parallax scrolling.
 export default function Parallax() {
   const { scrollYProgress } = useScroll()
   const breakItLines = ["BreakIt"]

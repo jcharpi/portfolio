@@ -4,6 +4,7 @@ import Typewriter from "@/components/Typewriter"
 import { useCursorContext } from "@/contexts/CursorContext"
 import { useEffect } from "react"
 
+// Placeholder page for the MadCourses project.
 export default function MadCourses() {
   const { setTargets } = useCursorContext()
 
