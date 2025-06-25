@@ -1,3 +1,4 @@
+// Structure describing a single info card.
 export type Card = {
   /** Image index used for the initial screenshot */
   image: number
@@ -11,6 +12,7 @@ export type Card = {
   bold: string[]
 }
 
+// Content used on the BreakIt page.
 export const CARDS: Card[] = [
   {
     image: 0,

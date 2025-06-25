@@ -4,12 +4,12 @@ import useMousePosition from "@/hooks/useMousePosition"
 import { useCursorContext } from "@/contexts/CursorContext"
 import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
 
-// Constants and types
+// Constants and types.
 
 type Position = { x: number; y: number }
 type Size = { width: number; height: number }
 
-// Custom hook for cursor behavior
+// Custom hook for cursor behavior.
 function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   const { x: mouseX, y: mouseY } = useMousePosition()
   const [displayPosition, setDisplayPosition] = useState<Position>({
@@ -27,16 +27,16 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   const isSnappedRef = useRef(isSnapped)
   const snappedElementRef = useRef<HTMLElement | null>(null)
 
-  // Update refs with latest values
+  // Update refs with the latest values.
   useEffect(() => {
     mousePosRef.current = { x: mouseX, y: mouseY }
     isSnappedRef.current = isSnapped
   }, [mouseX, mouseY, isSnapped])
 
-  // Handle mouse interactions
+  // Handle mouse interactions.
   useMouseInteractions(isSnappedRef, snappedElementRef, setColorIndex)
 
-  // Update cursor position and snapping
+  // Update cursor position and snapping.
   useCursorPositionUpdate(
     targets,
     mousePosRef,
@@ -46,7 +46,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
     snappedElementRef
   )
 
-  // Calculate colors based on the background color index
+  // Calculate colors based on the background color index.
   const mapping: [string, string][] = [
     [ACCENT_COLORS[1], ACCENT_COLORS[2]],
     [ACCENT_COLORS[2], ACCENT_COLORS[0]],
@@ -63,7 +63,7 @@ function useCursorBehavior(targets: React.RefObject<HTMLElement | null>[]) {
   }
 }
 
-// Custom hook for mouse interactions
+// Custom hook for mouse interactions.
 function useMouseInteractions(
   isSnappedRef: React.MutableRefObject<boolean>,
   snappedElementRef: React.MutableRefObject<HTMLElement | null>,
@@ -85,7 +85,7 @@ function useMouseInteractions(
   }, [isSnappedRef, snappedElementRef, setColorIndex])
 }
 
-// Custom hook for cursor position updates
+// Custom hook for cursor position updates.
 function useCursorPositionUpdate(
   targets: React.RefObject<HTMLElement | null>[],
   mousePosRef: React.MutableRefObject<Position>,
@@ -102,7 +102,7 @@ function useCursorPositionUpdate(
       let newSize = { width: 0, height: 0 }
       snappedElementRef.current = null
 
-      // Check all targets for snapping
+      // Check all targets for snapping.
       for (const ref of targets) {
         const element = ref.current
         if (!element) continue
@@ -121,7 +121,7 @@ function useCursorPositionUpdate(
         }
       }
 
-      // Update states only if values changed
+      // Update states only if values changed.
       setDisplayPosition((prev) =>
         prev.x === newPosition.x && prev.y === newPosition.y
           ? prev
@@ -157,7 +157,7 @@ function useCursorPositionUpdate(
   ])
 }
 
-// Main cursor component
+// Main cursor component.
 export default function Cursor() {
   const { targets } = useCursorContext()
   const {
@@ -185,7 +185,7 @@ export default function Cursor() {
   )
 }
 
-// Sub-components for better readability
+// Sub-components for better readability.
 function SnappedElementVisual({ size }: { size: Size }) {
   return (
     <div

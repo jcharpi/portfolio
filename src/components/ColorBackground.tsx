@@ -3,6 +3,7 @@
 import { motion } from "motion/react"
 import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
 
+// Animated full-screen background that follows the current accent color.
 export default function ColorBackground() {
   const { colorIndex } = useColorCycle()
 
