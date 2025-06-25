@@ -32,7 +32,7 @@ export const CARDS: Card[] = [
   },
   {
     image: 1,
-    icon: "redux.svg",
+    icon: "typescript.svg",
     titleLines: ["My Goals"],
     descLines: [
       "When I begin a new project, I start by identifying the technologies I want to learn, though inevitably, additional tools emerge as development unfolds. BreakIt was my first React Native app, building on my existing React experience and giving me hands-on insight into cross-platform mobile development, which offers clear advantages over maintaining separate native codebases. Furthermore, I also set out to deepen my understanding of integrating TypeScript within the React Native library and persisting data on app close.",
@@ -41,7 +41,7 @@ export const CARDS: Card[] = [
   },
   {
     image: 2,
-    icon: "typescript.svg",
+    icon: "redux.svg",
     titleLines: ["The Challenge"],
     descLines: [
       "My greatest challenge in developing BreakIt was managing several nested Context providers, which quickly led to tangled and confusing state handling. To resolve this, I adopted Redux Toolkit, a library that consolidates state management with persistence, stores, and reducers. Although learning Redux Toolkit required me to step beyond the React material covered in my university’s Building User Interfaces course and refactor much of my codebase, it proved to be the perfect solution for my Context issues and introduced me to a powerful state-management tool I’ll continue using in future projects.",

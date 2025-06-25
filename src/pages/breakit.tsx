@@ -71,7 +71,7 @@ function ImageCard({
         width={512}
         height={512}
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] -z-10 opacity-20 invert"
+        className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[31vw] h-[31vw] -z-10 opacity-75 invert"
       />
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
         {isHoverCard ? (
