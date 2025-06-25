@@ -66,6 +66,13 @@ function ImageCard({
   return (
     <section className="h-screen snap-start grid grid-cols-2 items-center">
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
+        <Image
+          src={`/icons/${card.icon}`}
+          alt=""
+          width={512}
+          height={512}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] -z-10 opacity-20 invert"
+        />
         {isHoverCard ? (
           <motion.div
             className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
