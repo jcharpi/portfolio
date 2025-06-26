@@ -30,16 +30,16 @@ function ImageCard({ card }: { card: Card }) {
   })
 
   return (
-    <section className="relative h-screen snap-start grid grid-cols-2 items-center">
+    <section className="relative h-screen snap-start flex flex-col items-center justify-center text-center">
       <Image
         src={`/icons/${card.icon}`}
         alt=""
         width={512}
         height={512}
         aria-hidden
-        className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
+        className="pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-9/12 h-10/12 justify-self-center">
+      <div ref={ref} className="relative w-10/12 md:w-8/12 lg:w-7/12 h-3/4">
         <Image
           src={`/madcourses/madcourses_${card.image}.png`}
           alt={`MadCourses ${card.image}`}
@@ -51,7 +51,7 @@ function ImageCard({ card }: { card: Card }) {
 
       <motion.div
         style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+        className="mt-12 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
       >
         {inView && (
           <div>
@@ -60,7 +60,7 @@ function ImageCard({ card }: { card: Card }) {
               speed={35}
               bold={[card.titleLines[0]]}
             />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <div className="text-4xl font-medium mt-4 text-neutral-100">
               <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
             </div>
           </div>
