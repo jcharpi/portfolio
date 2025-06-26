@@ -39,16 +39,14 @@ function ImageCard({ card }: { card: Card }) {
         aria-hidden
         className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-8/12 aspect-video justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/madcourses/madcourses_${card.image}.png`}
-            alt={`MadCourses ${card.image}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={isFirstImage}
-          />
-        </div>
+      <div ref={ref} className="relative w-9/12 h-10/12 justify-self-center">
+        <Image
+          src={`/madcourses/madcourses_${card.image}.png`}
+          alt={`MadCourses ${card.image}`}
+          fill
+          className="object-contain"
+          priority={isFirstImage}
+        />
       </div>
 
       <motion.div
