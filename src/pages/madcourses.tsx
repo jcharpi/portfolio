@@ -6,7 +6,6 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  useInView,
 } from "motion/react"
 import { useRef, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
@@ -25,9 +24,6 @@ function ImageCard({ card }: { card: Card }) {
   const isFirstImage = card.image === 1
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 300)
-  const inView = useInView(ref, {
-    margin: "0px 0px -800px 0px",
-  })
 
   return (
     <section className="relative h-screen snap-start flex flex-col items-center justify-center">
@@ -55,20 +51,16 @@ function ImageCard({ card }: { card: Card }) {
 
         <motion.div
           style={{ y }}
-          className="mt-12 text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-right"
+          className="mt-12 text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-left"
         >
-          {inView && (
-            <div>
-              <Typewriter
-                lines={card.titleLines}
-                speed={35}
-                bold={[card.titleLines[0]]}
-              />
-              <div className="text-4xl font-medium mt-4 text-neutral-100">
-                <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
-              </div>
-            </div>
-          )}
+          <Typewriter
+            lines={card.titleLines}
+            speed={35}
+            bold={[card.titleLines[0]]}
+          />
+          <div className="text-4xl font-medium mt-4 text-neutral-100">
+            <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
+          </div>
         </motion.div>
       </div>
     </section>
