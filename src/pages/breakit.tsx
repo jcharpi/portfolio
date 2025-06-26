@@ -12,6 +12,7 @@ import { useRef, useState, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 import { CARDS, Card } from "@/data/breakitCards"
+import { useCursorContext } from "@/contexts/CursorContext"
 
 // Indices used when cycling through screenshots on hover.
 const CYCLE_START = 3
@@ -77,7 +78,7 @@ function ImageCard({
         width={512}
         height={512}
         aria-hidden
-        className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[31vw] h-[31vw] -z-10 opacity-75 invert"
+        className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
       <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
         {isHoverCard ? (
@@ -139,11 +140,33 @@ export default function Parallax() {
     restDelta: 0.1,
   })
 
+  const resumeRef = useRef<HTMLAnchorElement>(null)
+  const { setTargets } = useCursorContext()
+
+  useEffect(() => {
+    setTargets([resumeRef])
+    return () => setTargets([])
+  }, [setTargets])
+
   return (
-    <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
-      <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
-        <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
-      </span>
+    <div className="relative">
+      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-white">
+        <p>
+          <a
+            ref={resumeRef}
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Resume
+          </a>
+        </p>
+      </header>
+
+      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
+        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+          <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
+        </span>
 
       <div className="snap-y snap-mandatory">
         {CARDS.map((card, idx) => (
@@ -159,5 +182,6 @@ export default function Parallax() {
         />
       </div>
     </main>
+    </div>
   )
 }
