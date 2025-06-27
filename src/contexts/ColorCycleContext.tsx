@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react"
 
 // Provides the current accent color and a setter to cycle through them.
 // Ordered list of accent colors used throughout the site.
-export const ACCENT_COLORS = ["#EFF1F3", "#6F799F", "#EA3A35"] as const
+export const ACCENT_COLORS = ["#EFF1F3", "#6F799F", "#D61C16"] as const
 
 interface ColorCycleContextValue {
   colorIndex: number
