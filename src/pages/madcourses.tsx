@@ -1,7 +1,14 @@
 "use client"
 
-import { motion, MotionValue, useScroll, useSpring, useTransform, useInView } from "motion/react"
-import { useRef, useEffect } from "react"
+import {
+  motion,
+  MotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  useInView,
+} from "motion/react"
+import { useRef, useEffect, Fragment } from "react"
 import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 import { CARDS, Card } from "@/data/madcoursesCards"
@@ -12,17 +19,20 @@ function useParallax(value: MotionValue<number>, distance: number) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
-// Card displaying an image with optional icon and parallax text.
-function InfoCard({ card }: { card: Card }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref })
-  const y = useParallax(scrollYProgress, 300)
-  const inView = useInView(ref, { margin: "0px 0px -800px 0px" })
+// Dimensions for each screenshot, used for Next.js optimization.
+const IMAGE_DIMENSIONS: Record<number, { width: number; height: number }> = {
+  1: { width: 3840, height: 2288 },
+  2: { width: 1700, height: 2200 },
+  3: { width: 2226, height: 2692 },
+}
 
+// Fullscreen screenshot with optional icon behind it.
+function ImageSection({ card }: { card: Card }) {
   const isFirstImage = card.image === 1
+  const dims = IMAGE_DIMENSIONS[card.image]
 
   return (
-    <section className="relative h-screen snap-start grid grid-cols-2 items-center">
+    <section className="relative h-screen snap-start flex items-center justify-center">
       {card.icon && (
         <Image
           src={`/icons/${card.icon}`}
@@ -30,29 +40,39 @@ function InfoCard({ card }: { card: Card }) {
           width={512}
           height={512}
           aria-hidden
-          className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
+          className="pointer-events-none absolute left-1/2 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
         />
       )}
-      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
-        <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
-          <Image
-            src={`/madcourses/madcourses_${card.image}.png`}
-            alt={`MadCourses ${card.image}`}
-            fill
-            className="p-2 rounded-[4rem]"
-            priority={isFirstImage}
-          />
-        </div>
-      </div>
+      <Image
+        src={`/madcourses/madcourses_${card.image}.png`}
+        alt={`MadCourses ${card.image}`}
+        width={dims.width}
+        height={dims.height}
+        priority={isFirstImage}
+        className="w-full h-auto"
+      />
+    </section>
+  )
+}
 
+// Typewriter text section shown after each screenshot.
+function InfoSection({ card }: { card: Card }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref })
+  const y = useParallax(scrollYProgress, 300)
+  const inView = useInView(ref, { margin: "0px 0px -800px 0px" })
+
+  return (
+    <section className="relative h-screen snap-start flex items-center justify-center">
       <motion.div
+        ref={ref}
         style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+        className="text-center text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
       >
         {inView && (
           <div>
             <Typewriter lines={card.titleLines} speed={35} bold={[card.titleLines[0]]} />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <div className="text-4xl font-medium mt-4 mx-auto max-w-[80%] text-neutral-100">
               <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
             </div>
           </div>
@@ -102,9 +122,15 @@ export default function MadCourses() {
 
         <div className="snap-y snap-mandatory">
           {CARDS.map((card, idx) => (
-            <InfoCard key={idx} card={card} />
+            <Fragment key={idx}>
+              <ImageSection card={card} />
+              <InfoSection card={card} />
+            </Fragment>
           ))}
-          <motion.div className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left" style={{ scaleX }} />
+          <motion.div
+            className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
+            style={{ scaleX }}
+          />
         </div>
       </main>
     </div>
