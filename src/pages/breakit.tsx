@@ -121,7 +121,7 @@ function ImageCard({
               bold={[card.titleLines[0]]}
             />
             <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
-              <Typewriter lines={card.descLines} speed={5} bold={card.bold} />
+              <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
             </div>
           </div>
         )}
@@ -131,7 +131,7 @@ function ImageCard({
 }
 
 // Page presenting BreakIt with parallax scrolling.
-export default function Parallax() {
+export default function BreakIt() {
   const { scrollYProgress } = useScroll()
   const breakItLines = ["BreakIt"]
   const scaleX = useSpring(scrollYProgress, {
