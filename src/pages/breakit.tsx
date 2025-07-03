@@ -71,7 +71,7 @@ function ImageCard({
   }, [])
 
   return (
-    <section className="relative h-screen snap-start grid lg:grid-cols-2 items-center">
+    <section className="relative min-h-screen snap-start grid lg:grid-cols-2 items-center">
       <Image
         src={`/icons/${card.icon}`}
         alt="Tech used icon"
