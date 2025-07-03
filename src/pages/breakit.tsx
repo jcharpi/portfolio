@@ -74,16 +74,16 @@ function ImageCard({
     <section className="relative h-screen snap-start grid md:grid-cols-2 items-center">
       <Image
         src={`/icons/${card.icon}`}
-        alt=""
+        alt="Tech used icon"
         width={512}
         height={512}
         aria-hidden
         className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-full md:w-5/12 justify-self-center p-4 md:p-0 aspect-[8/16]">
+      <div ref={ref} className="relative w-10/12 sm:w-8/12 md:w-5/12 justify-self-center p-4 md:p-0 aspect-[8/16]">
         {isHoverCard ? (
           <motion.div
-            className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
+            className="relative w-full h-full rounded-4xl bg-black shadow-2xl"
             whileHover={{ scale: 1.05 }}
             onHoverStart={handleHoverStart}
             onHoverEnd={handleHoverEnd}
@@ -92,17 +92,17 @@ function ImageCard({
               src={`/breakit/breakit_${imgIndex}.png`}
               alt={`BreakIt ${card.image}`}
               fill
-              className="p-2 rounded-[4rem]"
+              className="p-2 rounded-4xl"
               priority={isFirstImage}
             />
           </motion.div>
         ) : (
-          <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+          <div className="relative w-full h-full rounded-4xl bg-black shadow-2xl">
             <Image
               src={`/breakit/breakit_${imgIndex}.png`}
               alt={`BreakIt ${card.image}`}
               fill
-              className="p-2 rounded-[4rem]"
+              className="p-2 rounded-4xl"
               priority={isFirstImage}
             />
           </div>
@@ -111,7 +111,7 @@ function ImageCard({
 
       <motion.div
         style={{ y }}
-        className="col-span-1 text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-center md:text-left p-4 md:p-0"
+      className="col-span-1 text-2xl sm:text-2xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-center md:text-left p-4 md:p-0 mt-80 md:mt-0"
       >
         {inView && (
           <div>
@@ -168,7 +168,7 @@ export default function BreakIt() {
           <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
         </span>
 
-      <div className="snap-y snap-mandatory">
+      <div className="snap-y snap-mandatory mb-24">
         {CARDS.map((card, idx) => (
           <ImageCard
             key={idx}
