@@ -71,7 +71,7 @@ function ImageCard({
   }, [])
 
   return (
-    <section className="relative h-screen snap-start grid grid-cols-2 items-center">
+    <section className="relative h-screen snap-start grid md:grid-cols-2 items-center">
       <Image
         src={`/icons/${card.icon}`}
         alt=""
@@ -80,7 +80,7 @@ function ImageCard({
         aria-hidden
         className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-5/12 h-10/12 justify-self-center">
+      <div ref={ref} className="relative w-full md:w-5/12 justify-self-center p-4 md:p-0 aspect-[8/16]">
         {isHoverCard ? (
           <motion.div
             className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
@@ -111,7 +111,7 @@ function ImageCard({
 
       <motion.div
         style={{ y }}
-        className="col-span-1 text-8xl font-bold tracking-tight text-white pointer-events-none select-none"
+        className="col-span-1 text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-center md:text-left p-4 md:p-0"
       >
         {inView && (
           <div>
@@ -120,7 +120,7 @@ function ImageCard({
               speed={35}
               bold={[card.titleLines[0]]}
             />
-            <div className="text-4xl font-medium mt-4 mr-20 text-neutral-100">
+            <div className="text-base sm:text-lg md:text-2xl lg:text-4xl font-medium mt-4 md:mr-20 text-neutral-100">
               <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
             </div>
           </div>
