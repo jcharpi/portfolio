@@ -60,7 +60,7 @@ function ImageCard({
   }, [])
 
   return (
-    <section className="relative min-h-screen snap-start grid lg:grid-cols-2 items-center">
+    <section className="relative min-h-screen snap-start grid lg:grid-cols-3 items-center">
       <Image
         src={`/icons/${card.icon}`}
         alt="Tech used icon"
@@ -69,10 +69,10 @@ function ImageCard({
         aria-hidden
         className="hidden lg:block pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-5/12 min-w-[375px] justify-self-center p-4 md:p-0 aspect-[8/16]">
+      <div className="relative mb-24 lg:mb-0 max-h-screen min-w-[315px] w-4/12 justify-self-center m-4 lg:m-0 aspect-[8/16]">
         {isHoverCard ? (
           <motion.div
-            className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
+            className="relative w-full h-full rounded-[3rem] bg-black shadow-2xl"
             whileHover={{ scale: 1.05 }}
             onHoverStart={handleHoverStart}
             onHoverEnd={handleHoverEnd}
@@ -81,17 +81,17 @@ function ImageCard({
               src={`/breakit/breakit_${imgIndex}.png`}
               alt={`BreakIt ${card.image}`}
               fill
-              className="p-2 rounded-[4rem]"
+              className="p-2 rounded-[3rem]"
               priority={isFirstImage}
             />
           </motion.div>
         ) : (
-          <div className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl">
+          <div className="relative w-full h-full rounded-[3rem] bg-black shadow-2xl">
             <Image
               src={`/breakit/breakit_${imgIndex}.png`}
               alt={`BreakIt ${card.image}`}
               fill
-              className="p-2 rounded-[4rem]"
+              className="p-2 rounded-[3rem]"
               priority={isFirstImage}
             />
           </div>
@@ -99,7 +99,8 @@ function ImageCard({
       </div>
 
       <motion.div
-      className="min-h-[24rem] mt-4 lg:mt-0 col-span-1 text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white pointer-events-none select-none text-left p-4 lg:p-0"
+      ref={ref}
+      className="min-h-[24rem] lg:col-span-2 text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white pointer-events-none select-none text-justify"
       >
         {inView && (
           <div>
@@ -108,7 +109,7 @@ function ImageCard({
               speed={35}
               bold={[card.titleLines[0]]}
             />
-            <div className="text-lg md:text-2xl lg:text-3xl font-medium mt-4 lg:mr-12 text-neutral-100">
+            <div className="text-lg md:text-2xl lg:text-3xl font-medium lg:mr-12 mt-4 text-neutral-100">
               <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
             </div>
           </div>
@@ -152,7 +153,7 @@ export default function BreakIt() {
       </header>
 
       <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
-        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+        <span className="md:my-16 sm:my-8 my-6 md:ml-8">
           <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
         </span>
 
