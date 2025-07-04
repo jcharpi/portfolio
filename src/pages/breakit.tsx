@@ -2,10 +2,8 @@
 
 import {
   motion,
-  MotionValue,
   useScroll,
   useSpring,
-  useTransform,
   useInView,
 } from "motion/react"
 import { useRef, useState, useEffect } from "react"
@@ -17,11 +15,6 @@ import { useCursorContext } from "@/contexts/CursorContext"
 // Indices used when cycling through screenshots on hover.
 const CYCLE_START = 3
 const CYCLE_END = 6
-
-// Map scroll progress to a vertical offset for parallax motion.
-function useParallax(value: MotionValue<number>, distance: number) {
-  return useTransform(value, [0, 1], [-distance, distance])
-}
 
 // Card displaying a screenshot with parallax title and description.
 function ImageCard({
@@ -35,11 +28,7 @@ function ImageCard({
   const [imgIndex, setImgIndex] = useState(card.image)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const isFirstImage = card.image === 0
-  const { scrollYProgress } = useScroll({ target: ref })
-  const y = useParallax(scrollYProgress, 300)
-  const inView = useInView(ref, {
-    margin: "0px 0px -800px 0px",
-  })
+  const inView = useInView(ref)
 
   // Begin cycling through additional screenshots on hover.
   const handleHoverStart = () => {
@@ -78,9 +67,9 @@ function ImageCard({
         width={512}
         height={512}
         aria-hidden
-        className="pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
+        className="hidden lg:block pointer-events-none absolute left-1/11 -translate-x-1/2 -translate-y-1/3 w-[30vw] h-[30vw] -z-10 opacity-75 invert"
       />
-      <div ref={ref} className="relative w-10/12 sm:w-8/12 md:w-5/12 lg:w-5/12 lg:min-w-[400px] justify-self-center p-4 md:p-0 aspect-[8/16]">
+      <div ref={ref} className="relative w-5/12 min-w-[375px] justify-self-center p-4 md:p-0 aspect-[8/16]">
         {isHoverCard ? (
           <motion.div
             className="relative w-full h-full rounded-[4rem] bg-black shadow-2xl"
@@ -110,8 +99,7 @@ function ImageCard({
       </div>
 
       <motion.div
-        style={{ y }}
-      className="col-span-1 text-2xl sm:text-2xl md:text-4xl lg:text-8xl font-bold tracking-tight text-white pointer-events-none select-none text-left p-4 md:p-0 mt-88 lg:mt-0"
+      className="min-h-[24rem] mt-4 lg:mt-0 col-span-1 text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white pointer-events-none select-none text-left p-4 lg:p-0"
       >
         {inView && (
           <div>
@@ -120,7 +108,7 @@ function ImageCard({
               speed={35}
               bold={[card.titleLines[0]]}
             />
-            <div className="text-base sm:text-lg md:text-2xl lg:text-4xl font-medium mt-4 md:mr-20 text-neutral-100">
+            <div className="text-lg md:text-2xl lg:text-3xl font-medium mt-4 lg:mr-12 text-neutral-100">
               <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
             </div>
           </div>
@@ -177,7 +165,7 @@ export default function BreakIt() {
           />
         ))}
         <motion.div
-          className="fixed bottom-12 left-0 right-0 h-1 bg-white origin-left"
+          className="fixed bottom-4 left-0 right-0 h-1 bg-white origin-left"
           style={{ scaleX }}
         />
       </div>
