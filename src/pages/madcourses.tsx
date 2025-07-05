@@ -6,6 +6,16 @@ import Image from "next/image";
 import Typewriter from "@/components/Typewriter";
 import { CARDS, Card } from "@/data/madcoursesCards";
 import { useCursorContext } from "@/contexts/CursorContext";
+import {
+  headerLayout,
+  headerSpacing,
+  headerTextWhite,
+  mainLayout,
+  mainSpacing,
+  mainTextWhite,
+  heroMargin,
+  progressBar,
+} from "@/styles/classes";
 
 function ImageCard({ card }: { card: Card }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -71,15 +81,15 @@ export default function MadCourses() {
 
   return (
     <div className="relative">
-      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-white">
+      <header className={`${headerLayout} ${headerSpacing} ${headerTextWhite}`}>
         <a ref={resumeRef} href="/resume.pdf" target="_blank" rel="noopener noreferrer">
           Resume
         </a>
       </header>
 
       {/* Content */}
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
-        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8 mb-12">
+      <main className={`${mainLayout} ${mainSpacing} ${mainTextWhite}`}>
+        <span className={`${heroMargin} mb-12`}>
           <Typewriter lines={["MadCourses"]} speed={35} bold={["MadCourses"]} />
         </span>
 
@@ -89,10 +99,7 @@ export default function MadCourses() {
           ))}
 
           {/* Progress bar */}
-          <motion.div
-            style={{ scaleX }}
-            className="fixed bottom-4 left-0 right-0 h-1 origin-left bg-white"
-          />
+          <motion.div style={{ scaleX }} className={`${progressBar} bg-white`} />
         </div>
       </main>
     </div>
