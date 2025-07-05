@@ -11,6 +11,16 @@ import Typewriter from "@/components/Typewriter"
 import Image from "next/image"
 import { CARDS, Card } from "@/data/breakitCards"
 import { useCursorContext } from "@/contexts/CursorContext"
+import {
+  headerLayout,
+  headerSpacing,
+  headerTextWhite,
+  mainLayout,
+  mainSpacing,
+  mainTextWhite,
+  heroMargin,
+  progressBar,
+} from "@/styles/classes"
 
 // Indices used when cycling through screenshots on hover.
 const CYCLE_START = 3
@@ -139,7 +149,7 @@ export default function BreakIt() {
 
   return (
     <div className="relative">
-      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-white">
+      <header className={`${headerLayout} ${headerSpacing} ${headerTextWhite}`}>
         <p>
           <a
             ref={resumeRef}
@@ -152,8 +162,8 @@ export default function BreakIt() {
         </p>
       </header>
 
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
-        <span className="md:my-16 sm:my-8 my-6 md:ml-8">
+      <main className={`${mainLayout} ${mainSpacing} ${mainTextWhite}`}>
+        <span className={heroMargin}>
           <Typewriter lines={breakItLines} speed={35} bold={["BreakIt"]} />
         </span>
 
@@ -165,10 +175,7 @@ export default function BreakIt() {
             isHoverCard={idx === CARDS.length - 1}
           />
         ))}
-        <motion.div
-          className="fixed bottom-4 left-0 right-0 h-1 bg-white origin-left"
-          style={{ scaleX }}
-        />
+        <motion.div className={`${progressBar} bg-white`} style={{ scaleX }} />
       </div>
     </main>
     </div>

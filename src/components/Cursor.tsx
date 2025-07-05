@@ -3,6 +3,15 @@ import { motion } from "motion/react"
 import useMousePosition from "@/hooks/useMousePosition"
 import { useCursorContext } from "@/contexts/CursorContext"
 import { ACCENT_COLORS, useColorCycle } from "@/contexts/ColorCycleContext"
+import {
+  cursorContainer,
+  cursorWrapper,
+  snappedElement,
+  normalCursor,
+  cursorOutline,
+  cursorDotLeft,
+  cursorDotRight,
+} from "@/styles/classes"
 
 // Constants and types.
 type Position = { x: number; y: number }
@@ -169,11 +178,11 @@ export default function Cursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-50"
+      className={cursorContainer}
       animate={displayPosition}
       transition={{ ease: "easeOut", duration: 0.2 }}
     >
-      <div className="relative pointer-events-none">
+      <div className={cursorWrapper}>
         {isSnapped ? (
           <SnappedElementVisual size={snappedElementSize} />
         ) : (
@@ -188,7 +197,7 @@ export default function Cursor() {
 function SnappedElementVisual({ size }: { size: Size }) {
   return (
     <div
-      className="rounded-md bg-black opacity-50"
+      className={snappedElement}
       style={{
         width: size.width + 16,
         height: size.height + 16,
@@ -205,14 +214,14 @@ function NormalCursorVisual({
   rightColor: string
 }) {
   return (
-    <div className="relative w-10 h-10">
-      <div className="absolute inset-0 rounded-full bg-black opacity-50" />
+    <div className={normalCursor}>
+      <div className={cursorOutline} />
       <div
-        className="absolute -bottom-3 -left-5 w-4 h-4 rounded-full"
+        className={cursorDotLeft}
         style={{ backgroundColor: leftColor }}
       />
       <div
-        className="absolute -bottom-3 -right-5 w-4 h-4 rounded-full"
+        className={cursorDotRight}
         style={{ backgroundColor: rightColor }}
       />
     </div>

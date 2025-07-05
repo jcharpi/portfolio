@@ -5,6 +5,21 @@ import Image from "next/image"
 import { useRef, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
 import { useCursorContext } from "@/contexts/CursorContext"
+import {
+  headerLayout,
+  headerSpacing,
+  headerTextBlack,
+  mainLayout,
+  mainSpacing,
+  mainTextBlack,
+  footerLayout,
+  footerSpacing,
+  iconStyle,
+  heroMargin,
+  graduatePosition,
+  graduateSize,
+  graduateZ,
+} from "@/styles/classes"
 
 export default function Intro() {
   const resumeRef = useRef<HTMLAnchorElement>(null)
@@ -19,7 +34,7 @@ export default function Intro() {
 
   return (
     <div className="h-screen">
-      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-black">
+      <header className={`${headerLayout} ${headerSpacing} ${headerTextBlack}`}>
         <p>
           <a
             ref={resumeRef}
@@ -32,8 +47,8 @@ export default function Intro() {
         </p>
       </header>
 
-      <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-black">
-        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+      <main className={`${mainLayout} ${mainSpacing} ${mainTextBlack}`}>
+        <span className={heroMargin}>
           <Typewriter
             lines={[
               "Hello, I'm Josh,",
@@ -52,10 +67,10 @@ export default function Intro() {
         width={288}
         height={288}
         priority
-        className="absolute bottom-0 right-1/12 h-3/8 sm:h-4/8 md:h-5/8 w-auto z-0"
+        className={`${graduatePosition} ${graduateSize} ${graduateZ}`}
       />
 
-      <footer className="absolute bottom-0 inset-x-0 h-12 flex items-center justify-start px-6 z-10 space-x-4">
+      <footer className={`${footerLayout} ${footerSpacing}`}>
         <a
           ref={githubRef}
           href="https://github.com/jcharpi"
@@ -63,7 +78,7 @@ export default function Intro() {
           rel="noopener noreferrer"
           aria-label="GitHub Profile"
         >
-          <FaGithub className="w-6 h-6 text-black hover:text-gray-600 transition" />
+          <FaGithub className={`${iconStyle} text-black`} />
         </a>
         <a
           ref={linkedinRef}
@@ -72,7 +87,7 @@ export default function Intro() {
           rel="noopener noreferrer"
           aria-label="LinkedIn Profile"
         >
-          <FaLinkedin className="w-6 h-6 text-black hover:text-gray-600 transition" />
+          <FaLinkedin className={`${iconStyle} text-black`} />
         </a>
       </footer>
     </div>
