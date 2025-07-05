@@ -9,37 +9,40 @@ import { useCursorContext } from "@/contexts/CursorContext";
 
 function ImageCard({ card }: { card: Card }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { margin: "0px 0px -1000px 0px" });
+  const inView = useInView(ref);
 
   return (
-    <section className="relative flex h-screen flex-col items-center justify-center snap-start">
+    <section className="relative min-h-screen snap-start">
       {card.icon && (
         <Image
           src={`/icons/${card.icon}`}
-          alt=""
+          alt="Tech used icon"
           width={512}
           height={512}
           aria-hidden
-          className="absolute left-[27%] -translate-x-1/2 -translate-y-1/3 w-[30vw] opacity-75 invert pointer-events-none -z-10"
+          className="hidden lg:block absolute left-[27%] -translate-x-1/2 -translate-y-1/6 w-[30vw] opacity-75 invert pointer-events-none -z-10"
         />
       )}
 
-      <div ref={ref} className="relative h-8/12">
+      <div className="relative flex justify-center items-center">
         <Image
           src={`/madcourses/madcourses_${card.image}.png`}
           alt="MadCourses screenshot"
           width={1920}
           height={1080}
           priority
-          className="h-full w-auto p-2 object-contain"
+          className="max-h-[750px] w-auto m-2 object-contain"
         />
       </div>
 
-      <div className="mt-6 mb-20 flex h-56 w-9/12 flex-col justify-start px-6 text-left text-8xl font-bold tracking-tight text-white pointer-events-none select-none">
+      <div 
+        ref={ref} 
+        className="min-h-[24rem] mt-20 lg:my-20 mx-0 lg:mx-20 text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white pointer-events-none select-none text-justify"
+      >
         {inView && (
           <>
             <Typewriter lines={card.titleLines} speed={35} bold={[card.titleLines[0]]} />
-            <div className="mt-4 text-4xl font-medium text-neutral-100">
+            <div className="text-lg md:text-2xl lg:text-3xl font-medium mt-4 text-neutral-100">
               <Typewriter lines={card.descLines} speed={3} bold={card.bold} />
             </div>
           </>
@@ -67,9 +70,8 @@ export default function MadCourses() {
   }, [setTargets]);
 
   return (
-    <div className="relative text-white mb-8">
-      {/* Header */}
-      <header className="absolute inset-x-0 top-0 z-10 flex h-16 items-center justify-end px-6 text-lg font-medium">
+    <div className="relative">
+      <header className="absolute top-0 inset-x-0 h-16 flex items-center justify-end px-6 z-10 sm:text-lg text-sm font-medium text-white">
         <a ref={resumeRef} href="/resume.pdf" target="_blank" rel="noopener noreferrer">
           Resume
         </a>
@@ -77,7 +79,7 @@ export default function MadCourses() {
 
       {/* Content */}
       <main className="flex flex-col h-full px-6 xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white">
-        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8">
+        <span className="md:mt-16 sm:mt-8 mt-6 md:ml-8 mb-12">
           <Typewriter lines={["MadCourses"]} speed={35} bold={["MadCourses"]} />
         </span>
 
@@ -89,7 +91,7 @@ export default function MadCourses() {
           {/* Progress bar */}
           <motion.div
             style={{ scaleX }}
-            className="fixed bottom-12 left-0 right-0 h-1 origin-left bg-white"
+            className="fixed bottom-4 left-0 right-0 h-1 origin-left bg-white"
           />
         </div>
       </main>
