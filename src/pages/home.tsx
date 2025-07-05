@@ -1,6 +1,6 @@
 "use client"
 
-import { FaGithub, FaLinkedin } from "react-icons/fa"
+import { FaGithub, FaLinkedin, FaInfoCircle } from "react-icons/fa"
 import Image from "next/image"
 import { useRef, useEffect } from "react"
 import Typewriter from "@/components/Typewriter"
@@ -25,10 +25,12 @@ export default function Home() {
   const resumeRef = useRef<HTMLAnchorElement>(null)
   const githubRef = useRef<HTMLAnchorElement>(null)
   const linkedinRef = useRef<HTMLAnchorElement>(null)
+  const infoRef = useRef<HTMLAnchorElement>(null)
+
   const { setTargets } = useCursorContext()
 
   useEffect(() => {
-    setTargets([githubRef, linkedinRef, resumeRef])
+    setTargets([githubRef, linkedinRef, infoRef, resumeRef])
     return () => setTargets([])
   }, [setTargets])
 
@@ -89,6 +91,9 @@ export default function Home() {
         >
           <FaLinkedin className={`${iconStyle} text-black`} />
         </a>
+        <span ref={infoRef}>
+          <FaInfoCircle className={`${iconStyle} text-black`} />
+        </span>
       </footer>
     </div>
   )

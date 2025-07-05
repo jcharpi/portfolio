@@ -6,13 +6,13 @@ export const headerTextBlack = "sm:text-lg text-sm font-medium text-black"
 export const mainLayout = "flex flex-col h-full"
 export const mainSpacing = "px-6"
 export const mainTextWhite = "xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-white"
-export const mainTextBlack = "xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg font-light text-black"
+export const mainTextBlack = "xl:text-7xl lg:text-6xl md:text-5xl sm:text-4xl text-lg text-black"
 
 export const progressBar = "fixed bottom-4 left-0 right-0 h-1 origin-left"
 
 export const footerLayout = "absolute bottom-0 inset-x-0 h-12 flex items-center justify-start"
 export const footerSpacing = "px-6 z-10 space-x-4"
-export const iconStyle = "w-6 h-6 hover:text-gray-600 transition"
+export const iconStyle = "w-6 h-6 transition"
 
 export const heroMargin = "md:mt-16 sm:mt-8 mt-6 md:ml-8"
 
