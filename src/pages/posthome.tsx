@@ -9,9 +9,9 @@ export default function PostHome() {
       className={`${mainLayout} ${mainSpacing} ${mainTextBlack} h-screen flex items-center justify-center`}
     >
       <Typewriter
-        lines={["Thanks for visiting!", "Feel free to explore more soon."]}
+        lines={["Learn more about me!"]}
         speed={35}
-        bold={["Thanks", "explore"]}
+        bold={["me"]}
       />
     </main>
   )
