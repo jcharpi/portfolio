@@ -21,7 +21,7 @@ import {
   graduateZ,
 } from "@/styles/classes"
 
-export default function Intro() {
+export default function Home() {
   const resumeRef = useRef<HTMLAnchorElement>(null)
   const githubRef = useRef<HTMLAnchorElement>(null)
   const linkedinRef = useRef<HTMLAnchorElement>(null)
